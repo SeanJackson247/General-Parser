@@ -2,7 +2,7 @@
 
 A Basic Tokenizer written in JavaScript. Takes some code and a config file for input. The config file must contain the settings for the language you wish to parse. See the java.json config file for an example for the Java language.
 
-'''javascript
+```javascript
 
 let parse = require('C:/node/lang/parse.js');
 
@@ -21,18 +21,18 @@ config = JSON.parse(config);
 let tokens = parse(code,fileName,config);
 
 console.log(tokens);
-'''
+```
 
 And then from the command line:
-'''
+```
 node C:/node/lang/test.js inputFile.java java.json
-'''
+```
 
 Where inputFile.java is the source code and java.json is the language config file.
 
 For Example the code:
 
-'''java
+```java
 class Launcher{
 	//Example Java File
 	/* with support for comments*/
@@ -40,11 +40,11 @@ class Launcher{
 		System.io.println("Hello World!");
 	}
 }
-'''
+```
 
 Results in the output:
 
-'''javascript
+```javascript
 
 [
   Token {
@@ -181,7 +181,7 @@ Results in the output:
   }
 ]
 
-'''
+```
 
 # The config file
 
