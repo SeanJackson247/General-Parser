@@ -194,4 +194,4 @@ For patterns of symbols you wish to gather together, use the multiples array. Th
 
 The labels object is required, but may be empty. Each non comment and non string token is considered for labelling. Check the java.json config file to see how keywords are labelled, for example.
 
-Note: Does not correctly label <, and > tokens as delineators in the Java Example. You would need to add the code specifically for that, the purpose of this Basic Tokenizer is to be a general purpose starting block to parse all algol-based languages, and so I am trying to avoid language-specific details creeping in.
+Note: Does not correctly label <, and > tokens as delineators in the Java Example. You would need to add the code specifically for that, the purpose of this Basic Tokenizer is to be a general purpose starting block to parse all algol-based languages, and so I am trying to avoid language-specific details creeping in. The use of < and > as delineators in Java is context-dependent, i.e. they are operators most of the time and delineators when used in for example a class header.
