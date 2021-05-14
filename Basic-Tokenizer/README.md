@@ -24,10 +24,10 @@ console.log(tokens);
 
 And then from the command line:
 ```
-node C:/node/lang/test.js inputFile.java java.json
+node C:/node/lang/test.js inputFile.java java
 ```
 
-Where inputFile.java is the source code and java.json is the language config file.
+Where inputFile.java is the source code and java_parse.json is the language config file.
 
 For Example the code:
 
