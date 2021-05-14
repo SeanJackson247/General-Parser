@@ -1,6 +1,6 @@
 # Basic Tokenizer
 
-A Basic Tokenizer written in JavaScript. Takes some code and a config file for input. The config file must contain the settings for the language you wish to parse. See the java.json config file for an example for the Java language.
+A Basic Tokenizer written in JavaScript. Takes some code and a config file for input. The config file must contain the settings for the language you wish to parse. See the java_parse.json config file for an example for the Java language.
 
 ```javascript
 let parse = require('C:/node/lang/parse.js');
@@ -27,7 +27,7 @@ And then from the command line:
 node C:/node/lang/test.js inputFile.java java
 ```
 
-Where inputFile.java is the source code and java_parse.json is the language config file.
+Where inputFile.java is the source code and java_parse.json is the language config file. Note the _parse naming convention.
 
 For Example the code:
 
