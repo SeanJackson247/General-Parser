@@ -11,3 +11,5 @@ Takes a stream of tokens of the form output by the aforementioned Basic Tokenize
 
 # Java Parser
 Java Parser which currently parses Java to the point of nesting by delineators, using the two modules above, and some other code for glue.
+
+The Java Parser currently handles nowhere near all of the Java language, just the most common pieces.
