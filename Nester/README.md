@@ -1,15 +1,22 @@
-# Basic Nesting Parser
+# Nester
 
 A Basic Nesting Parser written in JavaScript. Takes a stream of tokens and a config file for input. The config file must contain the settings for the language you wish to parse. See the java_nest.json config file for an example for the Java language.
 
-'''javascript
+Use with the Basic-Tokenizer module, the parse function, to create a stream of tokens from some code or manually construct some tokens.
+
+Example use:
+
+```javascript
+
 let parse = require('C:/node/lang/parse.js');
+
+let nest = require('C:/node/lang/nest.js');
 
 let fs = require('fs');
 
 let fileName = process.argv[2];
 
-let config = process.argv[3];
+let config = process.argv[3] + "_parse.json";
 
 let code = fs.readFileSync(fileName,'utf-8');
 
@@ -19,19 +26,27 @@ config = JSON.parse(config);
 
 let tokens = parse(code,fileName,config);
 
-console.log(tokens);
-'''
+config = process.argv[3] + "_nest.json";
+
+config = fs.readFileSync(config,'utf-8');
+
+config = JSON.parse(config);
+
+tokens = nest(tokens,config);
+
+console.log(JSON.stringify(tokens,0,2));
+```
 
 And then from the command line:
-'''
-node C:/node/lang/test.js inputFile.java java.json
-'''
+```
+node C:/node/lang/test.js inputFile.java java
+```
 
-Where inputFile.java is the source code and java.json is the language config file.
+Where inputFile.java is the source code and java_nest.json and java_parse.json are the language config files.
 
 For Example the code:
 
-'''java
+```java
 class Launcher{
 	//Example Java File
 	/* with support for comments*/
@@ -39,11 +54,11 @@ class Launcher{
 		System.io.println("Hello World!");
 	}
 }
-'''
+```
 
 Results in the output:
 
-'''javascript
+```javascript
 
 [
   Token {
@@ -180,18 +195,10 @@ Results in the output:
   }
 ]
 
-'''
+```
 
 # The config file
 
 The config file contains a single object with the optional "comment" property, because JSON does not have any native supports for comments. Use the comment property to document your config file, it will be safely ignored.
 
-The string-delineators, single-line-comment-opener, multi-line-comment-opener, multi-line-comment-closer are all required and hopefully self-explanatory.
-
-Splitters and keepers are also required. During tokenization the parser will create a new token each time it encounters a splitter or keeper, with keepers being inserted in the resulting token stream as their own token, whilst splitters are not kept and do not appear in the resulting token stream.
-
-For patterns of symbols you wish to gather together, use the multiples array. This array may be empty, but it is required. This gathers symbols together outside of comments and strings only, and is useful to gather operators together. Remember to include each pattern leading up to the pattern you wish to catch, for example if your pattern is "****" then include "**" and "***".
-
-The labels object is required, but may be empty. Each non comment and non string token is considered for labelling. Check the java.json config file to see how keywords are labelled, for example.
-
-Note: Does not correctly label <, and > tokens as delineators in the Java Example.
+The object also has a delineators property, and it is an array of delineators, with each delineator being an array with two items, the first item the opener for the delineation and the second item the closer for the delineation.
