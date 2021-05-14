@@ -188,10 +188,10 @@ The config file contains a single object with the optional "comment" property, b
 
 The string-delineators, single-line-comment-opener, multi-line-comment-opener, multi-line-comment-closer are all required and hopefully self-explanatory.
 
-Splitters and keepers are also required. During tokenization the parser will create a new token each time it encounters a splitter or keeper, with keepers being inserted in the resulting token stream as their own token, whilst splitters are not kept and do not appear in the resulting token stream.
+Splitters and keepers are also required. During tokenization the parser will create a new token each time it encounters a splitter or keeper, with keepers being inserted in the resulting token stream as their own token, whilst splitters are not kept and do not appear in the resulting token stream. Keepers would be symbols like +,-,/,* ... etc, while splitters would be whitespace symbols and other symbols you may want to ignore. Note that splitting and keeping does not occur within comments or strings.
 
 For patterns of symbols you wish to gather together, use the multiples array. This array may be empty, but it is required. This gathers symbols together outside of comments and strings only, and is useful to gather operators together. Remember to include each pattern leading up to the pattern you wish to catch, for example if your pattern is "****" then include "**" and "***".
 
 The labels object is required, but may be empty. Each non comment and non string token is considered for labelling. Check the java.json config file to see how keywords are labelled, for example.
 
-Note: Does not correctly label <, and > tokens as delineators in the Java Example.
+Note: Does not correctly label <, and > tokens as delineators in the Java Example. You would need to add the code specifically for that, the purpose of this Basic Tokenizer is to be a general purpose starting block to parse all algol-based languages, and so I am trying to avoid language-specific details creeping in.
