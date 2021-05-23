@@ -22,7 +22,7 @@ The use of annotations\
 Variables, if, else and else if statements, return statements. While loops and basic for loops.\
 Static Blocks\
 Try, Catch, throws and finally\
-Anonymous Subclassing\
+Anonymous Subclassing
 
 The following features are NOT supported:
 
