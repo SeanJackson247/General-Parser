@@ -38,7 +38,7 @@ console.log(JSON.stringify(tokens,0,2));
 
 And then from the command line:
 ```
-node C:/node/lang/test.js inputFile.java java
+node example.js inputFile.java java
 ```
 
 Where inputFile.java is the source code and java_nest.json and java_parse.json are the language config files.
