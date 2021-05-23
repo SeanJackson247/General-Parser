@@ -32,6 +32,32 @@ Lambdas are not supported.
 
 The parser also does not perform any optimization or step-wise compilation so far.
 
-#How the parser works
+# How the parser works
 
-#How to run and test the parser
+The top level overview of the parser is the following 3 steps:
+
+    Basic Parseing
+    Type Checking
+    Compiling
+
+And can be seen in the java_parser.js file.
+The Basic Parseing can be seen in the java_base_parse file and consists of the following steps:
+
+    Basic Tokenization
+    Handle Imports - include other files
+    Associate Comments with the nearest token
+    Label and merge operators based on context-dependent factors.
+    Perform a basic sanity check on the syntactic validity of the tokens.
+    Nest tokens based on delineators (i.e. brackets)
+    Gather Tokens by statements and keywords
+    Convert to a final tree representation - from infix to postfix to an expression tree.
+
+# How to run and test the parser
+
+To run and test the parser type the following:
+
+```
+node java_parser.js example.java
+```
+
+Where example.java contains the Java code you want to compile. The resulting code will be output in a file called output.java
