@@ -4,7 +4,8 @@ Java Parser which currently parses a subset of Java and outputs Java code. In fu
 The Java Parser currently performs only basic syntax error checking. Checking for illegal class declarations, invalid method labels, e.t.c. is not done. There is NO type checking. The following features are supported:
 
     The use of generics
-    The use of import, both for individual files and folders. The code is just included in the output, no real attempt to mimic the import system in Java has been made.\
+    The use of import, both for individual files and folders.
+        The code is just included in the output, no real attempt to mimic the import system in Java has been made.
     The use of classes , interfaces and methods, extending and implementing
     Labelling classes, interfaces, methods, and/or fields as static, abstract, public, private, final, and protected.
     The use of annotations
