@@ -65,3 +65,13 @@ node java_parser.js example.java
 ```
 
 Where example.java contains the Java code you want to compile. The resulting code will be output in a file called output.java
+
+	TO DO List:
+	Test suite
+	Higher order logic check
+	Switch/continue statement support
+	Do statement support
+	Other array literal syntax
+	
+	Abstract out as much as possible to be non-specific to Java and place in separate files
+	Comment code more extensively
