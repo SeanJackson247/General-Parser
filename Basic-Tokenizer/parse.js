@@ -8,11 +8,12 @@ function parse(code,fileName,config){
 	let multiLineCommentCloser = config["multi-line-comment-closer"];
 
 	class Token{
-		constructor(data,type,lineNumber,fileName){
+		constructor(data,type,lineNumber,fileName,delineator){
 			this.data=data;
 			this.type=type;
 			this.lineNumber=lineNumber;
 			this.fileName=fileName;
+			this.delineator=delineator;
 		}
 	};
 
@@ -60,10 +61,19 @@ function parse(code,fileName,config){
 //		console.log("Considering ",i,code[i].split('\n').join('\\n').split('\r').join('\\r').split('\t').join('\\t'),mode);
 		if(mode=="string"){
 			if(code[i]==stringDelineator){
-				tokens_push(new Token(buffer,mode,lineNumber,fileName));
-				buffer="";
-				mode = "code";
-				stringDelineator = '!';
+				//check for escaped strings....
+				let escaped = false;
+				let e=i-1;
+				while(e>=0 && code[e]=='\\'){ escaped=!escaped; e--; }
+				if(!escaped){
+					tokens_push(new Token(buffer,mode,lineNumber,fileName,stringDelineator));
+					buffer="";
+					mode = "code";
+					stringDelineator = '!';
+				}
+				else{
+					buffer+=code[i];					
+				}
 			}
 			else{
 				buffer+=code[i];
@@ -142,4 +152,4 @@ function parse(code,fileName,config){
 	return tokens;
 
 }
-module.exports = parse;
+module.exports.parse = parse;

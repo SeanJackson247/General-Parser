@@ -1,4 +1,4 @@
-let parse = require('C:/node/lang/parse.js');
+let parse = require('../Basic-Tokenizer/parse.js');
 
 let fs = require('fs');
 

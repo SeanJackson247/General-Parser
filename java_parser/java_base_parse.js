@@ -1,20 +1,20 @@
 let fs = require('fs');
 
-let java_parse = require('C:/node/lang/java_parse.js').java_parse;
+let java_parse = require('./java_parse.js').java_parse;
 
-let nest = require('C:/node/lang/nest.js').nest;
+let nest = require('../Nester/nest.js').nest;
 
-let ConvertToTree = require('C:/node/lang/ConvertToTree.js').ConvertToTree;
+let ConvertToTree = require('./ConvertToTree.js').ConvertToTree;
 
-let associateComments = require('C:/node/lang/associateComments.js').associateComments;
+let associateComments = require('./associateComments.js').associateComments;
 
-let handleInclusions = require('C:/node/lang/handleInclusions.js').handleInclusions;
+let handleInclusions = require('./handleInclusions.js').handleInclusions;
 
-let javaSanityCheck = require('C:/node/lang/javaSanityCheck.js').javaSanityCheck;
+let javaSanityCheck = require('./javaSanityCheck.js').javaSanityCheck;
 
-let javaContextDependentOperatorLabellingAndMerging = require('C:/node/lang/javaContextDependentOperatorLabellingAndMerging.js').javaContextDependentOperatorLabellingAndMerging;
+let javaContextDependentOperatorLabellingAndMerging = require('./javaContextDependentOperatorLabellingAndMerging.js').javaContextDependentOperatorLabellingAndMerging;
 
-let javaGatherByStatementsAndKeywords=require('C:/node/lang/javaGatherByStatementsAndKeywords.js').javaGatherByStatementsAndKeywords;
+let javaGatherByStatementsAndKeywords=require('./javaGatherByStatementsAndKeywords.js').javaGatherByStatementsAndKeywords;
 
 function java_base_parse(fileName,requester=null){
 	let tokens = java_parse(fileName);
@@ -34,7 +34,7 @@ function java_base_parse(fileName,requester=null){
 
 	console.log("Operator Labelled:",JSON.stringify(tokens,0,2));
 
-	config = "java_nest.json";
+	config = "../Nester/java_nest.json";
 
 	config = fs.readFileSync(config,'utf-8');
 

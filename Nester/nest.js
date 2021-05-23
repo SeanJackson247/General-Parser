@@ -1,3 +1,4 @@
+//a problem here with the nester.... ... russian doll problem
 function nest(tokens,config){
 	function isOpener(data){
 		let delins = config.delineators;
@@ -31,15 +32,17 @@ function nest(tokens,config){
 			while(i<tokens.length && depth>0){
 				if(tokens[i].type=='delineator' && tokens[i].data==ender){
 					depth--;
+					if(depth==0){ i--; }
 				}
 				else if(tokens[i].type=='delineator' && tokens[i].data==opener){
 					depth++;
 				}
-				if(!(tokens[i].type=='delineator' && tokens[i].data==ender)){sub.push(tokens[i]);}
+				if(depth!=0){sub.push(tokens[i]);}
 				i++;
 			}
-			i--;
+			//i--;
 			nested[nested.length-1].sub = nest(sub,config);
+			console.log("Done nesting...",nested);
 		}
 		else{
 			nested.push(token);
@@ -47,4 +50,4 @@ function nest(tokens,config){
 	}
 	return nested;
 }
-module.exports = nest;
+module.exports.nest = nest;

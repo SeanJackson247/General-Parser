@@ -1,8 +1,8 @@
-let java_base_parse=require('C:/node/lang/java_base_parse.js').java_base_parse;
+let java_base_parse=require('./java_base_parse.js').java_base_parse;
 
-let typeCheck = require('C:/node/lang/typeCheck.js').typeCheck;
+let typeCheck = require('./typeCheck.js').typeCheck;
 
-let JavaToJava = require('C:/node/lang/javaToJava.js').JavaToJava;
+let JavaToJava = require('./JavaToJava.js').JavaToJava;
 
 let fs = require('fs');
 
@@ -14,4 +14,4 @@ typeCheck(tokens);
 
 let outputString = JavaToJava(tokens,false,0,true);
 
-fs.writeFileSync("C:/node/lang/output.java",outputString);
+fs.writeFileSync("output.java",outputString);

@@ -1,7 +1,7 @@
-let parse = require('C:/node/lang/parse.js').parse;
+let parse = require('../Basic-Tokenizer/parse.js').parse;
 let fs = require('fs');
 function java_parse(fileName,requester){
-	let config = "java_parse.json";
+	let config = "../Basic-Tokenizer/java_parse.json";
 
 	let code;
 	try{

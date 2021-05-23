@@ -32,6 +32,7 @@ The following features are NOT supported:
 
     Lambdas are not supported.
     The ':' operator, and therefore all non-basic for loops.
+	For, While, If Else If, and Else blocks must have containing curly braces.
 
 The parser also does not perform any optimization or step-wise compilation so far.
 

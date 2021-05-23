@@ -9,7 +9,7 @@ function handleInclusions(tokens,parent){
 	function load(file){
 		console.log("Loading ",file);
 //		let java_base_parse=require('C:/node/lang/java_base_parse.js').java_base_parse;
-		let java_parse=require('C:/node/lang/java_parse.js').java_parse;
+		let java_parse=require('./java_parse.js').java_parse;
 		if(imported.length==0){
 			imported.push(file);
 			let newTokens = java_parse(file);//java_base_parse(file);

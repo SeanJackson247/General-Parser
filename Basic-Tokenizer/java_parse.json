@@ -1,5 +1,5 @@
 {
-	"comment":"Based on https://docs.oracle.com/javase/tutorial/java/nutsandbolts/opsummary.html",
+	"comment":"Based on https://docs.oracle.com/javase/tutorial/java/nutsandbolts/opsummary.html Also , as operator is a hack, precedence borrowed from C++",
 	"string-delineators":["\"","'"],
 	"single-line-comment-opener":"//",
 	"multi-line-comment-opener":"/*",
@@ -22,10 +22,11 @@
 		"{}",
 		"<<",
 		">>",
-		">>>"
+		">>>",
+		"->"
 	],
 	"splitters":"\t\n\r ",
-	"keepers":"`¬!\"£$%^&*()-+=[]{};'#:@~,/<>?\\|",
+	"keepers":"`¬!\"£$%^&*()-+=[]{};'#:~,/<>?\\|",
 	"labels":{
 		"operator":[
 			"=",
@@ -36,11 +37,13 @@
 			"%",
 			"+",
 			"-",
-			"++",
-			"--",
-			"!",
 			"==",
 			"!=",
+			"+=",
+			"-=",
+			"*=",
+			"/=",
+			"%=",
 			">",
 			">=",
 			"<",
@@ -56,7 +59,17 @@
 			">>>",
 			"&",
 			"^",
-			"|"
+			"|",
+			",",
+			"->"
+		],
+		"operator-unary-left":[
+			"++",
+			"--"
+		],
+		"operator-unary-right":[
+			"new",
+			"!"
 		],
 		"delineator":["{","}","(",")","[","]"],
 		"terminator":[";"],
@@ -84,7 +97,10 @@
 			"private",
 			"protected",
 			"extends",
-			"implements"
+			"implements",
+			"continue",
+			"native",
+			"import"
 		]
 	}
 }
