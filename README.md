@@ -23,6 +23,11 @@ Variables, if, else and else if statements, return statements. While loops and b
 Static Blocks\
 Try, Catch, throws and finally\
 Anonymous Subclassing
+Arrays, but only the following syntax for instantiation:
+
+```java
+    int[] myIntArray = new int[]{1, 2, 3};
+```
 
 The following features are NOT supported:
 
