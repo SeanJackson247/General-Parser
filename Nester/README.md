@@ -60,35 +60,6 @@ Results in the output:
 ```javascript
 
 [
-  Token {
-    data: 'class',
-    type: 'keyword',
-    lineNumber: 1,
-    fileName: 'example.java',
-    delineator: undefined
-  },
-  Token {
-    data: 'Launcher',
-    type: 'operand',
-    lineNumber: 1,
-    fileName: 'example.java',
-    delineator: undefined
-  },
-  Token {
-    data: '{',
-    type: 'delineator',
-    lineNumber: 1,
-    fileName: 'example.java',
-    delineator: undefined,
-    sub: [
-      [Token], [Token],
-      [Token], [Token],
-      [Token], [Token],
-      [Token], [Token]
-    ]
-  }
-]
-[
   {
     "data": "class",
     "type": "keyword",
