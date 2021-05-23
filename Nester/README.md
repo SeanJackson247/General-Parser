@@ -64,133 +64,147 @@ Results in the output:
     data: 'class',
     type: 'keyword',
     lineNumber: 1,
-    fileName: 'example.java'
+    fileName: 'example.java',
+    delineator: undefined
   },
   Token {
     data: 'Launcher',
     type: 'operand',
     lineNumber: 1,
-    fileName: 'example.java'
+    fileName: 'example.java',
+    delineator: undefined
   },
   Token {
     data: '{',
     type: 'delineator',
     lineNumber: 1,
-    fileName: 'example.java'
+    fileName: 'example.java',
+    delineator: undefined,
+    sub: [
+      [Token], [Token],
+      [Token], [Token],
+      [Token], [Token],
+      [Token], [Token]
+    ]
+  }
+]
+[
+  {
+    "data": "class",
+    "type": "keyword",
+    "lineNumber": 1,
+    "fileName": "example.java"
   },
-  Token {
-    data: 'Example Java File\r',
-    type: 'single-line-comment',
-    lineNumber: 2,
-    fileName: 'example.java'
+  {
+    "data": "Launcher",
+    "type": "operand",
+    "lineNumber": 1,
+    "fileName": "example.java"
   },
-  Token {
-    data: ' with support for comments',
-    type: 'multi-line-comment',
-    lineNumber: 3,
-    fileName: 'example.java'
-  },
-  Token {
-    data: 'public',
-    type: 'keyword',
-    lineNumber: 4,
-    fileName: 'example.java'
-  },
-  Token {
-    data: 'static',
-    type: 'keyword',
-    lineNumber: 4,
-    fileName: 'example.java'
-  },
-  Token {
-    data: 'void',
-    type: 'operand',
-    lineNumber: 4,
-    fileName: 'example.java'
-  },
-  Token {
-    data: 'main',
-    type: 'operand',
-    lineNumber: 4,
-    fileName: 'example.java'
-  },
-  Token {
-    data: '(',
-    type: 'delineator',
-    lineNumber: 4,
-    fileName: 'example.java'
-  },
-  Token {
-    data: 'String',
-    type: 'operand',
-    lineNumber: 4,
-    fileName: 'example.java'
-  },
-  Token {
-    data: '[]',
-    type: 'operand',
-    lineNumber: 4,
-    fileName: 'example.java'
-  },
-  Token {
-    data: 'args',
-    type: 'operand',
-    lineNumber: 4,
-    fileName: 'example.java'
-  },
-  Token {
-    data: ')',
-    type: 'delineator',
-    lineNumber: 4,
-    fileName: 'example.java'
-  },
-  Token {
-    data: '{',
-    type: 'delineator',
-    lineNumber: 4,
-    fileName: 'example.java'
-  },
-  Token {
-    data: 'System.io.println',
-    type: 'operand',
-    lineNumber: 5,
-    fileName: 'example.java'
-  },
-  Token {
-    data: '(',
-    type: 'delineator',
-    lineNumber: 5,
-    fileName: 'example.java'
-  },
-  Token {
-    data: 'Hello World!',
-    type: 'string',
-    lineNumber: 5,
-    fileName: 'example.java'
-  },
-  Token {
-    data: ')',
-    type: 'delineator',
-    lineNumber: 5,
-    fileName: 'example.java'
-  },
-  Token {
-    data: ';',
-    type: 'terminator',
-    lineNumber: 5,
-    fileName: 'example.java'
-  },
-  Token {
-    data: '}',
-    type: 'delineator',
-    lineNumber: 6,
-    fileName: 'example.java'
-  },
-  Token {
-    data: '}',
-    type: 'delineator',
-    lineNumber: 7,
-    fileName: 'example.java'
+  {
+    "data": "{",
+    "type": "delineator",
+    "lineNumber": 1,
+    "fileName": "example.java",
+    "sub": [
+      {
+        "data": "Example Java File\r",
+        "type": "single-line-comment",
+        "lineNumber": 2,
+        "fileName": "example.java"
+      },
+      {
+        "data": " with support for comments",
+        "type": "multi-line-comment",
+        "lineNumber": 3,
+        "fileName": "example.java"
+      },
+      {
+        "data": "public",
+        "type": "keyword",
+        "lineNumber": 4,
+        "fileName": "example.java"
+      },
+      {
+        "data": "static",
+        "type": "keyword",
+        "lineNumber": 4,
+        "fileName": "example.java"
+      },
+      {
+        "data": "void",
+        "type": "operand",
+        "lineNumber": 4,
+        "fileName": "example.java"
+      },
+      {
+        "data": "main",
+        "type": "operand",
+        "lineNumber": 4,
+        "fileName": "example.java"
+      },
+      {
+        "data": "(",
+        "type": "delineator",
+        "lineNumber": 4,
+        "fileName": "example.java",
+        "sub": [
+          {
+            "data": "String",
+            "type": "operand",
+            "lineNumber": 4,
+            "fileName": "example.java"
+          },
+          {
+            "data": "[]",
+            "type": "operand",
+            "lineNumber": 4,
+            "fileName": "example.java"
+          },
+          {
+            "data": "args",
+            "type": "operand",
+            "lineNumber": 4,
+            "fileName": "example.java"
+          }
+        ]
+      },
+      {
+        "data": "{",
+        "type": "delineator",
+        "lineNumber": 4,
+        "fileName": "example.java",
+        "sub": [
+          {
+            "data": "System.io.println",
+            "type": "operand",
+            "lineNumber": 5,
+            "fileName": "example.java"
+          },
+          {
+            "data": "(",
+            "type": "delineator",
+            "lineNumber": 5,
+            "fileName": "example.java",
+            "sub": [
+              {
+                "data": "Hello World!",
+                "type": "string",
+                "lineNumber": 5,
+                "fileName": "example.java",
+                "delineator": "\""
+              }
+            ]
+          },
+          {
+            "data": ";",
+            "type": "terminator",
+            "lineNumber": 5,
+            "fileName": "example.java"
+          }
+        ]
+      }
+    ]
   }
 ]
 
