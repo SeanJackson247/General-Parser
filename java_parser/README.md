@@ -68,6 +68,7 @@ node java_parser.js example.java
 Where example.java contains the Java code you want to compile. The resulting code will be output in a file called output.java
 
 	TO DO List:
+	Caret position preserved in tokenization
 	Delineator Check, for correct opening and closing
 	Explicit casting support
 	Switch/continue statement support
