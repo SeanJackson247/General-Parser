@@ -76,4 +76,5 @@ Where example.java contains the Java code you want to compile. The resulting cod
 	Other array literal syntax
 	
 	Abstract out as much as possible to be non-specific to Java and place in separate files
+	Type Checker
 	Comment code more extensively
