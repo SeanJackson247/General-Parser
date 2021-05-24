@@ -70,6 +70,7 @@ Where example.java contains the Java code you want to compile. The resulting cod
 	TO DO List:
 	Caret position preserved in tokenization	DONE
 	Update Tokenizer README
+	Caret position for compiler-generated tokens
 	Delineator Check, for correct opening and closing
 	Update Nester README
 	Explicit casting support
