@@ -73,6 +73,7 @@ Where example.java contains the Java code you want to compile. The resulting cod
 	Higher order logic check
 	Switch/continue statement support
 	Do statement support
+	Support control flow statements without curly braces.
 	Other array literal syntax
 	
 	Abstract out as much as possible to be non-specific to Java and place in separate files
