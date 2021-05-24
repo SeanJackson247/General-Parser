@@ -72,6 +72,7 @@ Where example.java contains the Java code you want to compile. The resulting cod
 	Explicit casting support
 	Switch/continue statement support
 	Do statement support
+	The ':' operator
 	Support control flow statements without curly braces.
 	Other array literal syntax
 	Higher order logic check
@@ -85,6 +86,8 @@ Where example.java contains the Java code you want to compile. The resulting cod
 		Switch statements are well formed, with only cases inside them. Cases only occur within Switches,etc.
 		Else If and else can only follow if or else if
 		A return statement can only occur in a method
+		The ':' operator only occurs in a for loop condition
+		For loop conditions are well formed
 	A warning and error system
 	Use of commas as Separators
 	Test suite
