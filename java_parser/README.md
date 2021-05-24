@@ -77,7 +77,7 @@ Where example.java contains the Java code you want to compile. The resulting cod
 	Higher order logic check
 		Check use of commas
 		All functions are methods, occur within classes or interfaces
-		Classes and interfaces do not 'throw'
+		Only methods throw
 		Try blocks are followed by catch blocks
 		Catch blocks only follow Try blocks
 		Finally blocks only follow Catch blocks
