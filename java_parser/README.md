@@ -69,12 +69,25 @@ Where example.java contains the Java code you want to compile. The resulting cod
 
 	TO DO List:
 	Explicit casting support
-	Test suite
-	Higher order logic check
 	Switch/continue statement support
 	Do statement support
 	Support control flow statements without curly braces.
 	Other array literal syntax
+	Delineator Check, for correct opening and closing
+	Higher order logic check
+		Check use of commas
+		All functions are methods, occur within classes or interfaces
+		Classes and interfaces do not 'throw'
+		Try blocks are followed by catch blocks
+		Catch blocks only follow Try blocks
+		Finally blocks only follow Catch blocks
+		Break and Continue occur only within control flow blocks/blocks uhm I'm not sure I'd have to check...
+		Switch statements are well formed, with only cases inside them. Cases only occur within Switches,etc.
+		Else If and else can only follow if or else if
+		A return statement can only occur in a method
+	A warning and error system
+	Use of commas as Separators
+	Test suite
 	
 	Abstract out as much as possible to be non-specific to Java and place in separate files
 	Type Checker
