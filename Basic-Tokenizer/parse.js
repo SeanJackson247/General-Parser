@@ -8,9 +8,10 @@ function parse(code,fileName,config){
 	let multiLineCommentCloser = config["multi-line-comment-closer"];
 
 	class Token{
-		constructor(data,type,lineNumber,fileName,delineator){
+		constructor(data,type,lineNumber,caretPosition,fileName,delineator){
 			this.data=data;
 			this.type=type;
+			this.caretPosition=caretPosition;
 			this.lineNumber=lineNumber;
 			this.fileName=fileName;
 			this.delineator=delineator;
@@ -57,6 +58,8 @@ function parse(code,fileName,config){
 
 	let lineNumber = 1;
 
+	let caretPosition = 1;
+
 	for(let i=0;i<code.length;i++){
 //		console.log("Considering ",i,code[i].split('\n').join('\\n').split('\r').join('\\r').split('\t').join('\\t'),mode);
 		if(mode=="string"){
@@ -66,7 +69,7 @@ function parse(code,fileName,config){
 				let e=i-1;
 				while(e>=0 && code[e]=='\\'){ escaped=!escaped; e--; }
 				if(!escaped){
-					tokens_push(new Token(buffer,mode,lineNumber,fileName,stringDelineator));
+					tokens_push(new Token(buffer,mode,lineNumber,caretPosition,fileName,stringDelineator));
 					buffer="";
 					mode = "code";
 					stringDelineator = '!';
@@ -81,7 +84,7 @@ function parse(code,fileName,config){
 		}
 		else if(mode=="multi-line-comment"){
 			if(code.substring(i,i+multiLineCommentCloser.length) == multiLineCommentCloser){
-				tokens_push(new Token(buffer,mode,lineNumber,fileName));
+				tokens_push(new Token(buffer,mode,lineNumber,caretPosition,fileName));
 				buffer = "";
 				mode = "code";
 				i++;
@@ -92,7 +95,7 @@ function parse(code,fileName,config){
 		}
 		else if(mode=="single-line-comment"){
 			if(code[i]=='\n'){
-				tokens_push(new Token(buffer,mode,lineNumber,fileName));
+				tokens_push(new Token(buffer,mode,lineNumber,caretPosition,fileName));
 				buffer = "";
 				mode = "code";
 			}
@@ -106,23 +109,23 @@ function parse(code,fileName,config){
 				mode = "string";
 			}
 			else if(code.substring(i,i+singleLineCommentOpener.length) == singleLineCommentOpener){
-				if(buffer.length>0){ tokens_push(new Token(buffer,mode,lineNumber,fileName)); }		
+				if(buffer.length>0){ tokens_push(new Token(buffer,mode,lineNumber,caretPosition,fileName)); }		
 				mode = "single-line-comment";
 				buffer="";
 				i++;
 			}
 			else if(code.substring(i,i+multiLineCommentOpener.length) == multiLineCommentOpener){
-				if(buffer.length>0){ tokens_push(new Token(buffer,mode,lineNumber,fileName)); }		
+				if(buffer.length>0){ tokens_push(new Token(buffer,mode,lineNumber,caretPosition,fileName)); }		
 				mode = "multi-line-comment";
 				buffer="";
 				i++;
 			}
 			else if(splitters.indexOf(code[i])>=0){
-				if(buffer.length>0){ tokens_push(new Token(buffer,mode,lineNumber,fileName)); }
+				if(buffer.length>0){ tokens_push(new Token(buffer,mode,lineNumber,caretPosition,fileName)); }
 				buffer = "";
 			}
 			else if(keepers.indexOf(code[i])>=0){
-				if(buffer.length>0){ tokens_push(new Token(buffer,mode,lineNumber,fileName)); }		
+				if(buffer.length>0){ tokens_push(new Token(buffer,mode,lineNumber,caretPosition,fileName)); }		
 				tokens_push(new Token(code[i],mode,lineNumber,fileName));
 				buffer = "";
 			}
@@ -132,11 +135,15 @@ function parse(code,fileName,config){
 		}
 		if(code[i]=='\n'){
 			lineNumber++;
+			caretPosition=1;
+		}
+		else{
+			caretPosition++;
 		}
 	}
 
 	if(buffer.length>0){
-		tokens_push(new Token(buffer,mode,lineNumber,fileName));
+		tokens_push(new Token(buffer,mode,lineNumber,caretPosition,fileName));
 	}
 	
 	for(let token of tokens){
