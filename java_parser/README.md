@@ -73,6 +73,7 @@ Where example.java contains the Java code you want to compile. The resulting cod
 	Caret position for compiler-generated tokens
 	Delineator Check, for correct opening and closing
 	Update Nester README
+	Interfaces and Classes need to gather preceeding keywords (currently an error)
 	Explicit casting support
 	Switch/continue statement support
 	Do statement support
