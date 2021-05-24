@@ -68,12 +68,12 @@ node java_parser.js example.java
 Where example.java contains the Java code you want to compile. The resulting code will be output in a file called output.java
 
 	TO DO List:
+	Delineator Check, for correct opening and closing
 	Explicit casting support
 	Switch/continue statement support
 	Do statement support
 	Support control flow statements without curly braces.
 	Other array literal syntax
-	Delineator Check, for correct opening and closing
 	Higher order logic check
 		Check use of commas
 		All functions are methods, occur within classes or interfaces
