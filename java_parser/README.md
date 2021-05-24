@@ -33,6 +33,7 @@ The following features are NOT supported:
     Lambdas are not supported.
     The ':' operator, and therefore all non-basic for loops.
 	For, While, If Else If, and Else blocks must have associated curly braces.
+	Explicit casting is not supported.
 
 The parser also does not perform any optimization so far.
 
