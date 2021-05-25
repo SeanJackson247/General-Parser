@@ -126,7 +126,7 @@ function parse(code,fileName,config){
 			}
 			else if(keepers.indexOf(code[i])>=0){
 				if(buffer.length>0){ tokens_push(new Token(buffer,mode,lineNumber,caretPosition,fileName)); }		
-				tokens_push(new Token(code[i],mode,lineNumber,fileName));
+				tokens_push(new Token(code[i],mode,lineNumber,caretPosition,fileName));
 				buffer = "";
 			}
 			else{
