@@ -40,7 +40,10 @@ function nest(tokens,config){
 				if(depth!=0){sub.push(tokens[i]);}
 				i++;
 			}
-			//i--;
+			if(depth>0){
+				console.log("Error, delineator "+token.data+" on line "+token.lineNumber+":"+token.caretPosition+" in file "+token.fileName+" does not have corresponding closing delineator.");
+				throw new Error();
+			}
 			nested[nested.length-1].sub = nest(sub,config);
 			console.log("Done nesting...",nested);
 		}
