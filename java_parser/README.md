@@ -71,7 +71,7 @@ Where example.java contains the Java code you want to compile. The resulting cod
 	Caret position preserved in tokenization							DONE
 	Update Tokenizer README
 	Caret position for compiler-generated tokens							DONE
-	Delineator Check, for correct opening and closing
+	Delineator Check, for correct opening and closing						DONE
 	Update Nester README
 	Interfaces and Classes need to gather preceeding keywords (currently an error)
 	Explicit casting support
