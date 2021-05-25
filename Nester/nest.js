@@ -1,4 +1,3 @@
-//a problem here with the nester.... ... russian doll problem
 function nest(tokens,config){
 	function isOpener(data){
 		let delins = config.delineators;
