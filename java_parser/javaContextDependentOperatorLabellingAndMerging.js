@@ -117,8 +117,9 @@ function javaContextDependentOperatorLabellingAndMerging(tokens){
 		let token = tokens[i];
 		let data = token.data;
 		if(token.type=="operand" && data[0]=='.'){
-			ntokens.push({data:".",type:"operator",lineNumber:token.lineNumber,fileName:token.fileName});
+			ntokens.push({data:".",type:"operator",lineNumber:token.lineNumber,fileName:token.fileName,caretPosition:token.caretPosition});
 			token.data = token.data.substring(1);
+			token.caretPosition++;
 			ntokens.push(token);
 		}
 		else{

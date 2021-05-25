@@ -114,7 +114,7 @@ function javaGatherByStatementsAndKeywords(tokens,parent=null){
 				let hitTerminal=false;
 				while(i<tokens.length && !hitTerminal){
 					if(tokens[i].type=="terminator" && tokens[i].data==";"){
-						ntokens.push({type:"operand",data:buff,lineNumber:tokens[i].lineNumber,fileName : tokens[i].fileName});
+						ntokens.push({type:"operand",data:buff,lineNumber:tokens[i].lineNumber,fileName : tokens[i].fileName,caretPosition:tokens[i].caretPosition});
 						ntokens.push(tokens[i]);
 						hitTerminal=true;
 						i--;
@@ -147,6 +147,7 @@ function javaGatherByStatementsAndKeywords(tokens,parent=null){
 					type:"LiteralArray",
 					lineNumber:token.lineNumber,
 					fileName:token.fileName,
+					caretPosition:token.caretPosition
 				});
 				
 				console.log("Making Sub...");
@@ -248,6 +249,7 @@ function javaGatherByStatementsAndKeywords(tokens,parent=null){
 					type:"LiteralSubClass",
 					lineNumber:token.lineNumber,
 					fileName:token.fileName,
+					caretPosition:token.caretPosition
 				});
 				
 				console.log("Making Sub...");
@@ -312,7 +314,8 @@ function javaGatherByStatementsAndKeywords(tokens,parent=null){
 					name:buffer[0],
 					arguments:token.sub ,
 					lineNumber:token.lineNumber,
-					fileName:token.fileName
+					fileName:token.fileName,
+					caretPosition:token.caretPosition
 				});
 				
 				console.log(ntokens);

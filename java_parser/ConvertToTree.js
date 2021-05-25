@@ -13,10 +13,10 @@ function insertOperators(tokens){
 				//is a var ref...
 				if(token.data=='('){
 					console.log("VARREF with open bracket");
-					ntokens.push({ data:"CALL", type:"operator" , lineNumber:token.lineNumber , fileName:token.fileName });
+					ntokens.push({ data:"CALL", type:"operator" , lineNumber:token.lineNumber , fileName:token.fileName, caretPosition:token.caretPosition });
 				}
 				if(token.data=='['){
-					ntokens.push({ data:"LOOK_UP", type:"operator" , lineNumber:token.lineNumber , fileName:token.fileName });
+					ntokens.push({ data:"LOOK_UP", type:"operator" , lineNumber:token.lineNumber , fileName:token.fileName, caretPosition:token.caretPosition });
 				}
 			}
 		}
