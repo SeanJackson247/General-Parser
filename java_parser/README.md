@@ -80,6 +80,7 @@ Where example.java contains the Java code you want to compile. The resulting cod
 	The ':' operator
 	Support control flow statements without curly braces.
 	Other array literal syntax
+	Support for the super keyword
 	Higher order logic check
 		Check use of commas
 		All functions are methods, occur within classes or interfaces
@@ -93,6 +94,7 @@ Where example.java contains the Java code you want to compile. The resulting cod
 		A return statement can only occur in a method
 		The ':' operator only occurs in a for loop condition
 		For loop conditions are well formed
+		Validation of class constructors
 	A warning and error system
 	Use of commas as Separators
 	Test suite
