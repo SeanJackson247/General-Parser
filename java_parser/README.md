@@ -73,7 +73,7 @@ Where example.java contains the Java code you want to compile. The resulting cod
 	Caret position for compiler-generated tokens							DONE
 	Delineator Check, for correct opening and closing						DONE
 	Update Nester README
-	Interfaces and Classes need to gather preceeding keywords (currently an error)
+	Interfaces and Classes need to gather preceeding keywords (currently an error)			DONE
 	Explicit casting support
 	Switch/continue statement support
 	Do statement support
