@@ -56,8 +56,39 @@ function javaGatherByStatementsAndKeywords(tokens,parent=null){
 			}
 			else if(token.data=="class" || token.data=="interface"){
 				console.log("Encountered complex....");
-				i++;
+				//check ntokens for preceeding keywords...
+				
 				let esc=false;
+				let leadingKeywords = [];
+				while(!esc && ntokens.length>0){
+					let top = ntokens[ntokens.length-1];
+					if(top.type!='keyword'){ esc=true; }
+					else{
+						if(top.data=="static"){
+							token._static = top.data;
+						}
+						else if(top.data=="package" || top.data=="protected" || top.data=="public" || top.data=="private"){
+							token.encapsulation = top.data;
+						}
+						else if(top.data=="native"){
+							token._native=true;
+						}
+						else if(top.data=="final"){
+							token._final=true;
+						}
+						else if(top.data=="abstract"){
+							token._abstract=true;							
+						}						
+						else{
+							esc=true;
+						}
+						if(!esc){
+							ntokens.pop();
+						}
+					}
+				}
+				i++;
+				esc=false;
 				let buffer = [];
 				while(i<tokens.length && !esc){
 					let t = tokens[i];
@@ -180,9 +211,7 @@ function javaGatherByStatementsAndKeywords(tokens,parent=null){
 			
 			//a function...
 			//a functions beginning is marked by anything which doesnt belong in the function name i.e. keyword, or name
-			
-			//HOLY FUCK this still doesnt work wtf
-			
+						
 			//OK parent not needed ? rely on terminators....
 
 			let isDeclaration = false;

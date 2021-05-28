@@ -12,6 +12,18 @@ function JavaToJava(tokens,includeTerminals=false,indent=0,includeNewLines=false
 		if(token.type=="keyword"){
 			if(token.data=='class'){
 				let header = token.header;
+				if(token._abstract){
+					code+="abstract ";
+				}
+				if(token._static){
+					code+="static ";
+				}
+				if(token._final){
+					code+="final ";
+				}
+				if(token.encapsulation){
+					code+=token.encapsulation+" ";
+				}
 				code+="class " + token.name;
 				if(token._extends){
 					code+=" extends "+token._extends;
@@ -27,7 +39,16 @@ function JavaToJava(tokens,includeTerminals=false,indent=0,includeNewLines=false
 //				console.log('No!');
 	//			throw new Error();
 				let header = token.header;
-				code+="class " + token.name;
+				if(token._abstract){
+					code+="abstract ";
+				}
+				if(token._static){
+					code+="static ";
+				}
+				if(token._final){
+					code+="final ";
+				}
+				code+="interface " + token.name;
 				if(token._extends){
 					code+=" extends "+token._extends;
 				}
