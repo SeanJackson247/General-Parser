@@ -30,6 +30,7 @@ function JavaToJava(tokens,includeTerminals=false,indent=0,includeNewLines=false
 				}
 				if(token.block){
 					code+="{\n"+JavaToJava(token.block,true,indent+1,true)+"}\n";
+//					code+="BLOCK";
 				}
 				else{
 					code+="{}\n";
@@ -124,9 +125,10 @@ function JavaToJava(tokens,includeTerminals=false,indent=0,includeNewLines=false
 			}
 			if(token.block){
 				code+="{\n"+JavaToJava(token.block,true,indent+1,true)+tabs+"}\n";
+//				code+="BLOCK";
 			}
 			else{
-				code+=";\n";				
+				code+=";\n";
 			}
 		}
 		else if(token.type=='operator-unary-right'){
@@ -149,7 +151,7 @@ function JavaToJava(tokens,includeTerminals=false,indent=0,includeNewLines=false
 		}
 		else if(token.type=='operator'){
 			console.log('str',JSON.stringify(token,0,2));
-			if(token.data=='CALL' || token.data=='LOOK_UP'){
+			if(token.data=='CALL' || token.data=='LOOK_UP' || token.data=="CAST"){
 				code+=JavaToJava([token.left],false) + /*token.data +*/ JavaToJava([token.right],false);
 				//code+="L call/lookup R";
 				if(includeTerminals){
@@ -231,7 +233,10 @@ function JavaToJava(tokens,includeTerminals=false,indent=0,includeNewLines=false
 		}
 	}
 	if(includeTerminals){
-//		code+=";\n";
+//		code+=";";//\n";
+	}
+	if(includeNewLines){
+	//	code+="\n";//\n";
 	}
 	return code;
 }

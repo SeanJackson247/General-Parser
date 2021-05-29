@@ -1,19 +1,16 @@
 function insertOperators(tokens){
 	let ntokens = [];
+	let isFunctionCall = false;
 	for(let i=0;i<tokens.length;i++){
+		isFunctionCall=false;
 		let token = tokens[i];
 		if(i>0 && ((token.type=='delineator' && (token.data=='(' || token.data=='[')) || (token.type=='operand' && (token.data=='()')))){
 			let last = tokens[i-1];
-			//this is altered to include checks for < generics, maybe consider merging into previous token in future...
-			//no require it or makes two operands and fucks it all up
-			/*if(last.type=='delineator' && last.data=='<' && token.data=='('){
-				ntokens.push({ data:"CALL", type:"operator" , lineNumber:token.lineNumber , fileName:token.fileName });			
-			}
-			else */if(last.type=='operand' && last.data[0]!=parseInt(last.data[0])){
-				//is a var ref...
+			if(last.type=='operand' && last.data[0]!=parseInt(last.data[0])){	//is a var ref...
 				if(token.data=='('){
 					console.log("VARREF with open bracket");
 					ntokens.push({ data:"CALL", type:"operator" , lineNumber:token.lineNumber , fileName:token.fileName, caretPosition:token.caretPosition });
+					isFunctionCall = true;
 				}
 				if(token.data=='['){
 					ntokens.push({ data:"LOOK_UP", type:"operator" , lineNumber:token.lineNumber , fileName:token.fileName, caretPosition:token.caretPosition });
@@ -28,6 +25,9 @@ function insertOperators(tokens){
 			}
 		}
 		ntokens.push(token);
+		if(token.data=="(" && !isFunctionCall){
+			ntokens.push({ data:"CAST", type:"operator" , lineNumber:token.lineNumber , fileName:token.fileName, caretPosition:token.caretPosition });
+		}
 	}
 	return ntokens;
 }
@@ -37,6 +37,7 @@ function getPrecedence(data){
 	//http://www.cs.bilkent.edu.tr/~guvenir/courses/CS101/op_precedence.html
 	
 	let ops = [
+		"CAST",
 		"CALL",
 		"LOOK_UP",
 		".",

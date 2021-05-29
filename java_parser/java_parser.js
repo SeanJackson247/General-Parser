@@ -12,6 +12,6 @@ let tokens = java_base_parse(fileName);
 
 typeCheck(tokens);
 
-let outputString = JavaToJava(tokens,false,0,true);
+let outputString = JavaToJava(tokens);
 
 fs.writeFileSync("output.java",outputString);
