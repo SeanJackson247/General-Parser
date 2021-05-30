@@ -76,9 +76,9 @@ Where example.java contains the Java code you want to compile. The resulting cod
 	Update Nester README
 	Interfaces and Classes need to gather preceeding keywords (currently an error)			DONE
 	Explicit casting support									DONE
-	Switch/continue statement support
-	Do statement support
-	The ':' 'operator'
+	Switch/continue statement support								DONE
+	Do statement support										DONE
+	The ':' 'operator'										DONE
 	Support for enums
 	Support control flow statements without curly braces.
 	Other array literal syntax
