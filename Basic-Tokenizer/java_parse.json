@@ -100,7 +100,8 @@
 			"implements",
 			"continue",
 			"native",
-			"import"
+			"import",
+			"default"
 		]
 	}
 }
