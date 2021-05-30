@@ -26,7 +26,13 @@ function javaSanityCheck(tokens){
 				token.data!="final" &&
 				token.data!="return" &&
 				token.data!="finally" &&
-				token.data!="abstract"){
+				token.data!="abstract" &&
+				token.data!="case" &&
+				token.data!="switch" &&
+				token.data!="break" &&
+				token.data!="default" &&
+				token.data!="continue" &&
+				token.data!="do"){
 					
 					console.log("Error! This compiler supports a limited subset of Java features.\nUnsupported keyword \'"+token.data+"\' on line "+token.lineNumber+" in file "+token.fileName);
 					throw new Error();
@@ -37,8 +43,8 @@ function javaSanityCheck(tokens){
 			throw new Error();
 		}
 		else if(token.type=='operator' && token.data==":"){
-			console.log("Error! This compiler supports a limited subset of Java features.\nSpecial for loops are not supported.\nUnsupported operator \'"+token.data+"\' on line "+token.lineNumber+" in file "+token.fileName);
-			throw new Error();
+//			console.log("Error! This compiler supports a limited subset of Java features.\nSpecial for loops are not supported.\nUnsupported operator \'"+token.data+"\' on line "+token.lineNumber+" in file "+token.fileName);
+	//		throw new Error();
 		}
 		else if(token.type=='string' && token.data.length!=1 && token.delineator!='\"'){
 			if(token.data.length>0){

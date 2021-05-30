@@ -7,7 +7,6 @@ function JavaToJava(tokens,includeTerminals=false,indent=0,includeNewLines=false
 	let code = "";//tabs;
 	for(let token of tokens){
 		if(includeTerminals && includeNewLines){code+=tabs;}
-//		if(includeTerminals && includeNewLines){code+="TABS("+tokens.length+")";}
 		console.log("COMPILING TOKEN ",token);
 		if(token.type=="keyword"){
 			if(token.data=='class'){
@@ -30,15 +29,12 @@ function JavaToJava(tokens,includeTerminals=false,indent=0,includeNewLines=false
 				}
 				if(token.block){
 					code+="{\n"+JavaToJava(token.block,true,indent+1,true)+"}\n";
-//					code+="BLOCK";
 				}
 				else{
 					code+="{}\n";
 				}
 			}
 			else if(token.data=="interface"){
-//				console.log('No!');
-	//			throw new Error();
 				let header = token.header;
 				if(token._abstract){
 					code+="abstract ";
@@ -60,9 +56,7 @@ function JavaToJava(tokens,includeTerminals=false,indent=0,includeNewLines=false
 					code+="{}\n";
 				}
 			}
-			else if(token.data=="do" || token.data=="try"){
-	//			console.log('No!');
-//				throw new Error();
+			else if(token.data=="do" || token.data=="try" || token.data=="else"){
 				code+=token.data;
 				if(token.block){
 					code+="{\n"+JavaToJava(token.block,true,indent+1,true)+tabs+"}\n";
@@ -70,8 +64,11 @@ function JavaToJava(tokens,includeTerminals=false,indent=0,includeNewLines=false
 				else{
 					code+="{}\n";					
 				}
+				if(token.data=="do"){
+					code+="while("+JavaToJava(token.condition,false,indent+1,false)+")";
+				}
 			}
-			else if(token.data=="for" || token.data=="while" || token.data=="if" || token.data=="catch"){
+			else if(token.data=="for" || token.data=="while" || token.data=="if" || token.data=="catch" || token.data=="switch"){
 				code+=token.data;
 				if(token.data=="for"){
 					let sub = JavaToJava(token.condition,true,0,false);
@@ -88,7 +85,6 @@ function JavaToJava(tokens,includeTerminals=false,indent=0,includeNewLines=false
 				}
 			}
 			else if(token.data=="static"){
-				//static block
 				code+="static{\n"+JavaToJava(token.block,true,indent+1)+tabs+"}";
 			}
 			else if(token.data=='return'){
@@ -96,13 +92,16 @@ function JavaToJava(tokens,includeTerminals=false,indent=0,includeNewLines=false
 			}
 			else if(token.data=="continue"){
 				code+="continue";
-				if(includeTerminals){
-					code+=";";
-				}
-				if(includeNewLines){
-					code+="\n";
-				}
-
+			}
+			else if(token.data=="break"){
+				code+="break";
+			}
+			else if(token.data=="default"){
+				code+="default";
+			}
+			else{
+				console.log("Unrecongised keyword : "+token.data);
+				throw new Error();
 			}
 		}
 		else if(token.type=="Function"){
@@ -125,7 +124,6 @@ function JavaToJava(tokens,includeTerminals=false,indent=0,includeNewLines=false
 			}
 			if(token.block){
 				code+="{\n"+JavaToJava(token.block,true,indent+1,true)+tabs+"}\n";
-//				code+="BLOCK";
 			}
 			else{
 				code+=";\n";
@@ -133,54 +131,29 @@ function JavaToJava(tokens,includeTerminals=false,indent=0,includeNewLines=false
 		}
 		else if(token.type=='operator-unary-right'){
 			code+=token.data+" "+JavaToJava([token.right],false,0);
-			if(includeTerminals){
-				code+=";";
-			}
-			if(includeNewLines){
-				code+="\n";
-			}
 		}
 		else if(token.type=='operator-unary-left'){
 			code+=JavaToJava([token.left],false,0)+token.data;
-			if(includeTerminals){
-				code+=";";
-			}
-			if(includeNewLines){
-				code+="\n";
-			}
 		}
 		else if(token.type=='operator'){
 			console.log('str',JSON.stringify(token,0,2));
 			if(token.data=='CALL' || token.data=='LOOK_UP' || token.data=="CAST"){
-				code+=JavaToJava([token.left],false) + /*token.data +*/ JavaToJava([token.right],false);
-				//code+="L call/lookup R";
-				if(includeTerminals){
-					code+=";";
-				}
-				if(includeNewLines){
-					code+="\n";
-				}
+				code+=JavaToJava([token.left],false) + JavaToJava([token.right],false);
 			}
 			else if(token.data=="instanceof"){
 				console.log('Token == ',token);
 				code+=JavaToJava([token.left],false,0) + " "+token.data +" "+
 					JavaToJava([token.right],false,0);
-				if(includeTerminals){
-					code+=";";
-				}
-				if(includeNewLines){
-					code+="\n";
-				}
 			}
 			else{
 				console.log('Token == ',token);
-				code+=JavaToJava([token.left],false,0) + token.data +
-					JavaToJava([token.right],false,0);
-				if(includeTerminals){
-					code+=";";
+				if(token.data==":"){
+					code+=JavaToJava([token.left],false,indent,false) + token.data +
+						JavaToJava([token.right],false,indent,false);
 				}
-				if(includeNewLines){
-					code+="\n";
+				else{
+					code+=JavaToJava([token.left],false,indent,false) + token.data +
+						JavaToJava([token.right],false,indent,false);					
 				}
 			}
 		}
@@ -189,7 +162,6 @@ function JavaToJava(tokens,includeTerminals=false,indent=0,includeNewLines=false
 			if(token.data=="("){
 				console.log('bracket',token.sub);
 				code+="("+JavaToJava(token.sub,false)+")";
-			//	code+="(delin)";
 			}
 			if(token.data=="["){
 				code+="["+JavaToJava(token.sub,false)+"]";
@@ -206,7 +178,6 @@ function JavaToJava(tokens,includeTerminals=false,indent=0,includeNewLines=false
 			code+=token.delineator+token.data+token.delineator;
 		}
 		else if(token.type == "LiteralSubClass"){
-//			code+=token.data+"{"+JavaToJava(token.block,false)+"}";
 			code+=token.data+"("+JavaToJava(token.arguments,false)+"){"+JavaToJava(token.block,true,indent+1,true)+"}";
 		}
 		else if(token.type == "LiteralArray"){
@@ -223,20 +194,12 @@ function JavaToJava(tokens,includeTerminals=false,indent=0,includeNewLines=false
 				code+=token.typeLabel + " ";
 			}
 			code+=token.data;
-			
-			if(includeTerminals){
-				code+=";";
-			}
-			if(includeNewLines){
-				code+="\n";
-			}
 		}
-	}
-	if(includeTerminals){
-//		code+=";";//\n";
-	}
-	if(includeNewLines){
-	//	code+="\n";//\n";
+//		if(includeTerminals && includeNewLines){code+=";\n";}
+		if(!(token.type == "operator" && token.data==":" && (token.right.type=="keyword"))){
+			if(includeTerminals && token.type!="Function" && !(token.type=="keyword" && (token.data=="switch" || token.data=="if" || token.data=="else if" || token.data=="else" || token.data=="for"))){code+=";";}
+		}
+		if(includeNewLines){code+="\n";}
 	}
 	return code;
 }

@@ -43,7 +43,7 @@ function javaGatherByStatementsAndKeywords(tokens,parent=null){
 				ntokens.push(token);
 				i++;
 			}
-			else if(token.data=="if" || token.data=="while" || token.data=="for" || token.data=="catch"){
+			else if(token.data=="if" || token.data=="while" || token.data=="for" || token.data=="catch" || token.data=="switch"){
 				token.condition = tokens[i+1].sub;
 				if(tokens[i+2].sub != undefined){ token.block = javaGatherByStatementsAndKeywords(tokens[i+2].sub,token); }
 				ntokens.push(token);
@@ -53,6 +53,12 @@ function javaGatherByStatementsAndKeywords(tokens,parent=null){
 				if(tokens[i+1].sub != undefined){ token.block = javaGatherByStatementsAndKeywords(tokens[i+1].sub,token); }
 				ntokens.push(token);
 				i++;
+			}
+			else if(token.data=="do"){
+				token.condition = tokens[i+3].sub;
+				if(tokens[i+1].sub != undefined){ token.block = javaGatherByStatementsAndKeywords(tokens[i+1].sub,token); }
+				ntokens.push(token);
+				i+=3;
 			}
 			else if(token.data=="class" || token.data=="interface"){
 				console.log("Encountered complex....");
@@ -137,8 +143,6 @@ function javaGatherByStatementsAndKeywords(tokens,parent=null){
 				i--;
 			}
 			else if(token.data=="import"){
-	//			console.log("Unwritten Code: Import statement.");
-//				throw new Error();
 				ntokens.push(token);
 				i++;
 				let buff="";
@@ -154,6 +158,22 @@ function javaGatherByStatementsAndKeywords(tokens,parent=null){
 						buff+=tokens[i].data;
 					}
 					i++;
+				}
+			}
+			else if(token.data=="case"){
+				i++;
+				tokens[i].typeLabel = "case";
+				ntokens.push(tokens[i]);
+			}
+			else if(token.data=="break"){
+				i++;
+				if(tokens[i].type != "operand"){
+					ntokens.push(token);
+					ntokens.push(tokens[i]);
+				}
+				else{
+					tokens[i].typeLabel = "break";
+					ntokens.push(tokens[i]);
 				}
 			}
 			else{
@@ -189,6 +209,7 @@ function javaGatherByStatementsAndKeywords(tokens,parent=null){
 
 		}
 		else if(
+
 			i<tokens.length-1 &&
 			token.type=="delineator" &&
 			(token.data=="(" || token.data=="()") &&
@@ -206,6 +227,8 @@ function javaGatherByStatementsAndKeywords(tokens,parent=null){
 			{
 			
 			console.log("Possible Function Declaration or Signature detected on line "+token.lineNumber,token,tokens[i-1],tokens[i+1]);
+			
+			//throw new Error();
 			
 			//DOES NOT TAKE INTO ACCOUNT LITERAL SUBCLASSES .. or array literals for that matter...
 			
@@ -246,7 +269,7 @@ function javaGatherByStatementsAndKeywords(tokens,parent=null){
 	//				throw new Error();
 					esc=true;
 				}
-				else if(top.type=='keyword' && (top.data=='if' || top.data=='else' || top.data=='while' || top.data=='for')){
+				else if(top.type=='keyword' && (top.data=='if' || top.data=='else' || top.data=='while' || top.data=='for' || top.data=='case' || top.data=='switch' || top.data=='default' || top.data=='break' || top.data=='case')){
 	//				throw new Error();
 					esc=true;
 				}
@@ -272,6 +295,7 @@ function javaGatherByStatementsAndKeywords(tokens,parent=null){
 			//should be able to detect in loop above! ^ ?
 			if(isLiteralSubClass){
 				console.log("Unwritten Code, literal subclass");
+				//throw new Error();
 				
 				ntokens.push({
 					data: tokens[i-1].data,
@@ -292,6 +316,11 @@ function javaGatherByStatementsAndKeywords(tokens,parent=null){
 			}
 			else if(isSignature || isDeclaration){
 				console.log("isSignature || isDeclaration == ",isSignature ,"||", isDeclaration);
+				
+				console.log(token , ntokens);
+				
+				//throw new Error();
+
 				let returnType = '';
 				let _static = "";
 				let encapsulation = "";
@@ -381,6 +410,9 @@ function javaGatherByStatementsAndKeywords(tokens,parent=null){
 			else{
 				//otherwise is just an invocation...
 				console.log("Nope, just an invocation...",isDeclaration,isSignature);
+				
+				//throw new Error();
+				
 				buffer=buffer.reverse();
 				for(let b of buffer){
 					ntokens.push(b);

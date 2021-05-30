@@ -74,7 +74,8 @@ function getPrecedence(data){
 		"-=",
 		"*=",
 		"/=",
-		"%="
+		"%=",
+		":"
 	];
 	ops = ops.reverse();
 	return ops.indexOf(data);
@@ -140,6 +141,14 @@ function toRPN(tokens){
 			}
 			token.typeLabel = last.data;
 			andstack.push(token);
+		}
+		else if(token.type=='keyword'){
+			//flush operator stack when keyword is encountered
+			andstack.push(token);
+			while(atorstack.length>0){
+				andstack.push(atorstack[atorstack.length-1]);
+				atorstack.pop();
+			}
 		}
 		else if(token.type!='single-line-comment' && token.type!='multi-line-comment'){
 			andstack.push(token);
