@@ -94,7 +94,6 @@ Where example.java contains the Java code you want to compile. The resulting cod
 		Switch statements are well formed, with only cases inside them. Cases only occur within Switches,etc.
 		Else If and else can only follow if or else if
 		A return statement can only occur in a method
-		The ':' operator only occurs in a for loop condition
 		For loop conditions are well formed
 		Validation of class constructors
 	A warning and error system
