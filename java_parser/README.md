@@ -29,6 +29,7 @@ The following features are NOT supported:
         switch
         case
         default
+	enum
 
     Lambdas are not supported.
     The ':' operator, and therefore all non-basic for loops.
@@ -78,6 +79,7 @@ Where example.java contains the Java code you want to compile. The resulting cod
 	Switch/continue statement support
 	Do statement support
 	The ':' operator
+	Support for enums
 	Support control flow statements without curly braces.
 	Other array literal syntax
 	Support for the super keyword
