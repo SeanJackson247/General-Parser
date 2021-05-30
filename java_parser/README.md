@@ -78,7 +78,7 @@ Where example.java contains the Java code you want to compile. The resulting cod
 	Explicit casting support									DONE
 	Switch/continue statement support
 	Do statement support
-	The ':' operator
+	The ':' 'operator'
 	Support for enums
 	Support control flow statements without curly braces.
 	Other array literal syntax
