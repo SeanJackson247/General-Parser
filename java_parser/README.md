@@ -79,7 +79,7 @@ Where example.java contains the Java code you want to compile. The resulting cod
 	Switch/continue statement support								DONE
 	Do statement support										DONE
 	The ':' 'operator'										DONE
-	Support for enums
+	Support for enums										DONE
 	Support control flow statements without curly braces.
 	Other array literal syntax
 	Support for the super keyword
