@@ -423,6 +423,147 @@
         ]
       }
     ]
+  },
+  {
+    "data": "class",
+    "type": "keyword",
+    "caretPosition": 13,
+    "lineNumber": 26,
+    "fileName": "tests/switch.java",
+    "encapsulation": "public",
+    "name": "Main",
+    "_implements": [],
+    "block": [
+      {
+        "data": "enum",
+        "type": "keyword",
+        "caretPosition": 6,
+        "lineNumber": 27,
+        "fileName": "tests/switch.java",
+        "name": "Level",
+        "block": [
+          {
+            "data": ",",
+            "type": "operator",
+            "caretPosition": 6,
+            "lineNumber": 28,
+            "fileName": "tests/switch.java",
+            "left": {
+              "data": "LOW",
+              "type": "operand",
+              "caretPosition": 6,
+              "lineNumber": 28,
+              "fileName": "tests/switch.java"
+            },
+            "right": {
+              "data": ",",
+              "type": "operator",
+              "caretPosition": 9,
+              "lineNumber": 29,
+              "fileName": "tests/switch.java",
+              "left": {
+                "data": "MEDIUM",
+                "type": "operand",
+                "caretPosition": 9,
+                "lineNumber": 29,
+                "fileName": "tests/switch.java"
+              },
+              "right": {
+                "data": "HIGH",
+                "type": "operand",
+                "caretPosition": 7,
+                "lineNumber": 30,
+                "fileName": "tests/switch.java"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "data": "Function",
+        "type": "Function",
+        "_native": false,
+        "_final": false,
+        "annotations": "",
+        "returnType": "void",
+        "_static": "static",
+        "encapsulation": "public",
+        "name": {
+          "data": "main",
+          "type": "operand",
+          "caretPosition": 25,
+          "lineNumber": 33,
+          "fileName": "tests/switch.java"
+        },
+        "arguments": [
+          {
+            "data": "args",
+            "type": "operand",
+            "caretPosition": 39,
+            "lineNumber": 33,
+            "fileName": "tests/switch.java",
+            "typeLabel": "String []"
+          }
+        ],
+        "lineNumber": 33,
+        "fileName": "tests/switch.java",
+        "caretPosition": 25,
+        "block": [
+          {
+            "data": "=",
+            "type": "operator",
+            "caretPosition": 15,
+            "lineNumber": 34,
+            "fileName": "tests/switch.java",
+            "left": {
+              "data": "myVar",
+              "type": "operand",
+              "caretPosition": 14,
+              "lineNumber": 34,
+              "fileName": "tests/switch.java",
+              "typeLabel": "Level"
+            },
+            "right": {
+              "data": "Level.MEDIUM",
+              "type": "operand",
+              "caretPosition": 29,
+              "lineNumber": 34,
+              "fileName": "tests/switch.java"
+            }
+          },
+          {
+            "data": "CALL",
+            "type": "operator",
+            "lineNumber": 35,
+            "fileName": "tests/switch.java",
+            "caretPosition": 21,
+            "left": {
+              "data": "System.out.println",
+              "type": "operand",
+              "caretPosition": 21,
+              "lineNumber": 35,
+              "fileName": "tests/switch.java"
+            },
+            "right": {
+              "data": "(",
+              "type": "delineator",
+              "caretPosition": 21,
+              "lineNumber": 35,
+              "fileName": "tests/switch.java",
+              "sub": [
+                {
+                  "data": "myVar",
+                  "type": "operand",
+                  "caretPosition": 27,
+                  "lineNumber": 35,
+                  "fileName": "tests/switch.java"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
   }
 ]
 
@@ -456,8 +597,21 @@ public class Switch{
 		x=10;
 		do{
 			x--;
-		}
-while(x>=0);
+		}while(x>=0);
 	}
+
+
+}
+public class Main{
+	enum Level{
+		LOW,MEDIUM,HIGH
+	}
+
+	
+	static public void main(String [] args){
+		Level myVar=Level.MEDIUM;
+		System.out.println(myVar);
+	}
+
 
 }

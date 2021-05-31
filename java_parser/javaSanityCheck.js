@@ -13,6 +13,7 @@ function javaSanityCheck(tokens){
 				token.data!="catch" &&
 				token.data!="throws" &&
 				token.data!="class" &&
+				token.data!="enum" &&
 				token.data!="interface" &&
 				token.data!="extends" &&
 				token.data!="implements" &&

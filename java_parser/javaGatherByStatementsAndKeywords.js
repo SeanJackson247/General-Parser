@@ -60,87 +60,98 @@ function javaGatherByStatementsAndKeywords(tokens,parent=null){
 				ntokens.push(token);
 				i+=3;
 			}
-			else if(token.data=="class" || token.data=="interface"){
-				console.log("Encountered complex....");
+			else if(token.data=="class" || token.data=="interface" || token.data=='enum'){
+				console.log("Encountered complex....",token);
 				//check ntokens for preceeding keywords...
 				
-				let esc=false;
-				let leadingKeywords = [];
-				while(!esc && ntokens.length>0){
-					let top = ntokens[ntokens.length-1];
-					if(top.type!='keyword'){ esc=true; }
-					else{
-						if(top.data=="static"){
-							token._static = top.data;
-						}
-						else if(top.data=="package" || top.data=="protected" || top.data=="public" || top.data=="private"){
-							token.encapsulation = top.data;
-						}
-						else if(top.data=="native"){
-							token._native=true;
-						}
-						else if(top.data=="final"){
-							token._final=true;
-						}
-						else if(top.data=="abstract"){
-							token._abstract=true;							
-						}						
-						else{
-							esc=true;
-						}
-						if(!esc){
-							ntokens.pop();
-						}
-					}
+				if(token.data=="enum"){
+					token.name = tokens[i+1].data;
+					if(tokens[i+2].sub != undefined){ token.block = javaGatherByStatementsAndKeywords(tokens[i+2].sub,token); }
+					ntokens.push(token);
+					console.log("ntokens == ",JSON.stringify(ntokens,0,2));
+//					throw new Error();
+					i+=2;
 				}
-				i++;
-				esc=false;
-				let buffer = [];
-				while(i<tokens.length && !esc){
-					let t = tokens[i];
-					if((t.type=='operand' && t.data=='{}') || (t.type=='delineator' && t.data=='{')){
-						token.header = buffer;
-						let x=0;
-						let _implements = [];
-						let inImplements = false;
-						for(x=0;x<token.header.length;x++){
-							if(inImplements){
-								_implements.push(token.header[x]);
+				else{
+					let esc=false;
+					let leadingKeywords = [];
+					while(!esc && ntokens.length>0){
+						console.log('loop');
+						let top = ntokens[ntokens.length-1];
+						if(top.type!='keyword'){ esc=true; }
+						else{
+							if(top.data=="static"){
+								token._static = top.data;
 							}
-							if(token.header[x].type=='keyword' && token.header[x].data=='implements'){
-								inImplements=true;
+							else if(top.data=="package" || top.data=="protected" || top.data=="public" || top.data=="private"){
+								token.encapsulation = top.data;
+							}
+							else if(top.data=="native"){
+								token._native=true;
+							}
+							else if(top.data=="final"){
+								token._final=true;
+							}
+							else if(top.data=="abstract"){
+								token._abstract=true;							
+							}						
+							else{
+								esc=true;
+							}
+							if(!esc){
+								ntokens.pop();
 							}
 						}
-						x=0;
-						let esc2=false;
-						for(x=0;esc2==false && x<token.header.length;x++){
-							let t = token.header[x];
-							if(t.type=='keyword'){
-								if(t.data=='extends'){
-									token._extends = token.header[x+1].data;
-								}
-								esc2=true;
-								x--;
-							}
-						}
-						x--;
-						if(token.header[x].type=="delineator" && token.header[x].data=="<"){
-							token.generics = javaGatherByStatementsAndKeywords(token.header[x].sub,token.header[x]);
-							x--;
-						}
-						token.name = token.header[x].data;
-						token._implements = _implements; 
-						if(t.sub != undefined){ token.block = javaGatherByStatementsAndKeywords(t.sub,token); }
-						delete token.header;//this can be commented in and out for debugging
-						ntokens.push(token);
-						esc=true;
-					}
-					else{
-						buffer.push(t);
 					}
 					i++;
+					esc=false;
+					let buffer = [];
+					while(i<tokens.length && !esc){
+						let t = tokens[i];
+						if((t.type=='operand' && t.data=='{}') || (t.type=='delineator' && t.data=='{')){
+							token.header = buffer;
+							let x=0;
+							let _implements = [];
+							let inImplements = false;
+							for(x=0;x<token.header.length;x++){
+								if(inImplements){
+									_implements.push(token.header[x]);
+								}
+								if(token.header[x].type=='keyword' && token.header[x].data=='implements'){
+									inImplements=true;
+								}
+							}
+							x=0;
+							let esc2=false;
+							for(x=0;esc2==false && x<token.header.length;x++){
+								let t = token.header[x];
+								if(t.type=='keyword'){
+									if(t.data=='extends'){
+										token._extends = token.header[x+1].data;
+									}
+									esc2=true;
+									x--;
+								}
+							}
+							x--;
+							if(token.header[x].type=="delineator" && token.header[x].data=="<"){
+								token.generics = javaGatherByStatementsAndKeywords(token.header[x].sub,token.header[x]);
+								x--;
+							}
+							token.name = token.header[x].data;
+							token._implements = _implements; 
+							if(t.sub != undefined){ token.block = javaGatherByStatementsAndKeywords(t.sub,token); }
+							delete token.header;//this can be commented in and out for debugging
+							ntokens.push(token);
+							esc=true;
+						}
+						else{
+							buffer.push(t);
+						}
+						i++;
+					}
+					i--;
 				}
-				i--;
 			}
 			else if(token.data=="import"){
 				ntokens.push(token);
@@ -250,7 +261,7 @@ function javaGatherByStatementsAndKeywords(tokens,parent=null){
 			while(ntokens.length>0 && esc==false){
 				let top = ntokens[ntokens.length-1];
 				//console.log("Considering ... ",top);
-				if(top.type=='Function' || top.type=='terminator' || (top.type=='keyword' && (top.data=='class' || top.data=='interface'))){
+				if(top.type=='Function' || top.type=='terminator' || (top.type=='keyword' && (top.data=='class' || top.data=='interface' || top.data=='enum'))){
 					esc=true;
 					//isSignature=true;
 				}

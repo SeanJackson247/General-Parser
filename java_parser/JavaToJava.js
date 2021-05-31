@@ -1,15 +1,15 @@
 function JavaToJava(tokens,includeTerminals=false,indent=0,includeNewLines=false){
 	//compile...
-	console.log("COMPILING ",tokens);
+//	console.log("COMPILING ",tokens);
 	if(tokens==undefined){ return undefined; }//hacky
 	if(tokens.length==1 && tokens[0]==undefined){ return undefined; }
 	let tabs = '\t'.repeat(indent);
 	let code = "";//tabs;
 	for(let token of tokens){
 		if(includeTerminals && includeNewLines){code+=tabs;}
-		console.log("COMPILING TOKEN ",token);
+//		console.log("COMPILING TOKEN ",token);
 		if(token.type=="keyword"){
-			if(token.data=='class'){
+			if(token.data=='class' || token.data=='enum' || token.data=='interface'){
 				let header = token.header;
 				if(token._abstract){
 					code+="abstract ";
@@ -23,34 +23,17 @@ function JavaToJava(tokens,includeTerminals=false,indent=0,includeNewLines=false
 				if(token.encapsulation){
 					code+=token.encapsulation+" ";
 				}
-				code+="class " + token.name;
+				code+=token.data+" " + token.name;
 				if(token._extends){
 					code+=" extends "+token._extends;
 				}
 				if(token.block){
-					code+="{\n"+JavaToJava(token.block,true,indent+1,true)+"}\n";
-				}
-				else{
-					code+="{}\n";
-				}
-			}
-			else if(token.data=="interface"){
-				let header = token.header;
-				if(token._abstract){
-					code+="abstract ";
-				}
-				if(token._static){
-					code+="static ";
-				}
-				if(token._final){
-					code+="final ";
-				}
-				code+="interface " + token.name;
-				if(token._extends){
-					code+=" extends "+token._extends;
-				}
-				if(token.block){
-					code+="{\n"+JavaToJava(token.block,true,indent+1,true)+"}\n";
+					if(token.data=="enum"){
+						code+="{\n"+tabs+"\t"+JavaToJava(token.block,false,indent+1,true)+tabs+"}\n";						
+					}
+					else{
+						code+="{\n"+JavaToJava(token.block,true,indent+1,true)+"\n"+tabs+"}\n";
+					}
 				}
 				else{
 					code+="{}\n";
@@ -58,14 +41,22 @@ function JavaToJava(tokens,includeTerminals=false,indent=0,includeNewLines=false
 			}
 			else if(token.data=="do" || token.data=="try" || token.data=="else"){
 				code+=token.data;
-				if(token.block){
-					code+="{\n"+JavaToJava(token.block,true,indent+1,true)+tabs+"}\n";
+				if(token.data=="do"){
+					if(token.block){
+						code+="{\n"+JavaToJava(token.block,true,indent+1,true)+tabs+"}";
+					}
+					else{
+						code+="{}";
+					}
+					code+="while("+JavaToJava(token.condition,false,indent+1,false)+")";
 				}
 				else{
-					code+="{}\n";					
-				}
-				if(token.data=="do"){
-					code+="while("+JavaToJava(token.condition,false,indent+1,false)+")";
+					if(token.block){
+						code+="{\n"+JavaToJava(token.block,true,indent+1,true)+tabs+"}\n";
+					}
+					else{
+						code+="{}\n";					
+					}
 				}
 			}
 			else if(token.data=="for" || token.data=="while" || token.data=="if" || token.data=="catch" || token.data=="switch"){
@@ -197,7 +188,7 @@ function JavaToJava(tokens,includeTerminals=false,indent=0,includeNewLines=false
 		}
 //		if(includeTerminals && includeNewLines){code+=";\n";}
 		if(!(token.type == "operator" && token.data==":" && (token.right.type=="keyword"))){
-			if(includeTerminals && token.type!="Function" && !(token.type=="keyword" && (token.data=="switch" || token.data=="if" || token.data=="else if" || token.data=="else" || token.data=="for"))){code+=";";}
+			if(includeTerminals && token.type!="Function" && !(token.type=="keyword" && (token.data=="switch" || token.data=="if" || token.data=="else if" || token.data=="else" || token.data=="for" || token.data=="class" || token.data=="interface"  || token.data=="enum"))){code+=";";}
 		}
 		if(includeNewLines){code+="\n";}
 	}
