@@ -90,6 +90,7 @@
 			"throws",
 			"class",
 			"interface",
+			"enum",
 			"abstract",
 			"static",
 			"final",
