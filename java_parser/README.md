@@ -81,8 +81,8 @@ Where example.java contains the Java code you want to compile. The resulting cod
 	The ':' 'operator'										DONE
 	Support for enums										DONE
 	Support control flow statements without curly braces.						DONE
-	Other array literal syntax
-	Support for the super keyword
+	Other array literal syntax									DONE
+	Support for the super keyword									DONE
 	Higher order logic check
 		Check use of commas
 		All functions are methods, occur within classes or interfaces
