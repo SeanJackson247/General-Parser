@@ -16,4 +16,4 @@ let outputString = JavaToJava(tokens);
 
 let breaker = "\n\n\n***************************************************\n\n\n";
 
-fs.writeFileSync("output.java",/*JSON.stringify(tokens,0,2)+breaker+*/outputString);
+fs.writeFileSync("output.java",JSON.stringify(tokens,0,2)+breaker+outputString);

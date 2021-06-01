@@ -43,16 +43,51 @@ function javaGatherByStatementsAndKeywords(tokens,parent=null){
 				ntokens.push(token);
 				i++;
 			}
-			else if(token.data=="if" || token.data=="while" || token.data=="for" || token.data=="catch" || token.data=="switch"){
-				token.condition = tokens[i+1].sub;
-				if(tokens[i+2].sub != undefined){ token.block = javaGatherByStatementsAndKeywords(tokens[i+2].sub,token); }
-				ntokens.push(token);
-				i+=2;
+			else if(token.data=="if" || token.data=="else if" || token.data=="while" || token.data=="for" || token.data=="catch" || token.data=="switch"){
+				if(token.data=="if" || token.data=="else if" || token.data=="while" || token.data=="for" && !(tokens[i+2].type=='delineator' && tokens[i+2].data=='{')){
+					token.condition = tokens[i+1].sub;
+					let tokenArray = [];
+					i+=2;
+					let esc=false;
+					while(i<tokens.length && !esc){
+						tokenArray.push(tokens[i]);
+						if(tokens[i].type == 'terminator'){
+							esc=true;
+							i--;
+						}
+						i++;
+					}
+					token.block = javaGatherByStatementsAndKeywords(tokenArray,token);
+					ntokens.push(token);
+				}
+				else{
+					token.condition = tokens[i+1].sub;
+					if(tokens[i+2].sub != undefined){ token.block = javaGatherByStatementsAndKeywords(tokens[i+2].sub,token); }
+					ntokens.push(token);
+					i+=2;
+				}
 			}
 			else if(token.data=="else" || token.data=="try" || token.data=="finally"){
-				if(tokens[i+1].sub != undefined){ token.block = javaGatherByStatementsAndKeywords(tokens[i+1].sub,token); }
-				ntokens.push(token);
-				i++;
+				if(token.data=="else" && !(tokens[i+1].type=='delineator' && tokens[i+1].data=='{')){
+	//				token.condition = tokens[i+1].sub;
+					let tokenArray = [];
+					i+=1;
+					let esc=false;
+					while(i<tokens.length && !esc){
+						tokenArray.push(tokens[i]);
+						if(tokens[i].type == 'terminator'){
+							esc=true;
+						}
+						i++;
+					}
+					token.block = javaGatherByStatementsAndKeywords(tokenArray,token);
+					ntokens.push(token);
+				}
+				else{
+					if(tokens[i+1].sub != undefined){ token.block = javaGatherByStatementsAndKeywords(tokens[i+1].sub,token); }
+					ntokens.push(token);
+					i++;
+				}
 			}
 			else if(token.data=="do"){
 				token.condition = tokens[i+3].sub;
