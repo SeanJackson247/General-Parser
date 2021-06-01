@@ -90,7 +90,7 @@ Where example.java contains the Java code you want to compile. The resulting cod
 		Try blocks are followed by catch blocks
 		Catch blocks only follow Try blocks
 		Finally blocks only follow Catch blocks
-		Break and Continue occur only within control flow blocks/blocks uhm I'm not sure I'd have to check...
+		Break and Continue occur only within control flow blocks
 		Switch statements are well formed, with only cases inside them. Cases only occur within Switches,etc.
 		Else If and else can only follow if or else if
 		A return statement can only occur in a method
