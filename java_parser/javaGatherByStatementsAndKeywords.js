@@ -227,11 +227,18 @@ function javaGatherByStatementsAndKeywords(tokens,parent=null){
 			}
 		}
 		else if(
-			i<tokens.length-1 &&
+			//i<tokens.length-1 &&
+			i>1 &&
+			
+			(/*tokens[i-2].type == "operator" && */tokens[i-2].data == "new") &&
+			
 			((token.type=="delineator" &&
-			token.data=="[") || (token.type=="operand" && token.data=="[]")) &&
-			(((tokens[i+1].type=="delineator" &&
-			tokens[i+1].data=="{") || (tokens[i+1].type == "operand" && tokens[i+1].data=="{}"))))
+			token.data=="[") || (token.type=="operand" && token.data=="[]")) //&&
+			
+			/*(((tokens[i+1].type=="delineator" &&
+			tokens[i+1].data=="{") || (tokens[i+1].type == "operand" && tokens[i+1].data=="{}")))*/
+			
+			)
 			{
 				
 				console.log("Unwritten Code! Array literal...",tokens[i],tokens[i-1],tokens[i+1]);
@@ -250,6 +257,9 @@ function javaGatherByStatementsAndKeywords(tokens,parent=null){
 				console.log("Making Sub...");
 				if(token.sub != undefined){ ntokens[ntokens.length-1].arguments = javaGatherByStatementsAndKeywords(token.sub,ntokens[ntokens.length-1]); }
 				if(tokens[i+1].sub != undefined){ ntokens[ntokens.length-1].block = javaGatherByStatementsAndKeywords(tokens[i+1].sub,ntokens[ntokens.length-1]); }
+				else{
+					i--;
+				}
 				console.log("Made Sub...");
 				i++;
 

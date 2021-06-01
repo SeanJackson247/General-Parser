@@ -174,10 +174,10 @@ function JavaToJava(tokens,includeTerminals=false,indent=0,includeNewLines=false
 		else if(token.type == "LiteralArray"){
 			let args = JavaToJava(token.arguments,false);
 			if(args){
-				code+=token.data+"["+args+"]{"+JavaToJava(token.block,true,indent+1,true)+"}";
+				code+=token.data+"["+args+"]{"+JavaToJava(token.block,false,indent+1,false)+"}";
 			}
 			else{
-				code+=token.data+"[]{"+JavaToJava(token.block,true,indent+1,true)+"}";				
+				code+=token.data+"[]{"+JavaToJava(token.block,false,indent+1,false)+"}";				
 			}
 		}
 		else if(token.type!='single-line-comment' && token.type!='multi-line-comment'){
