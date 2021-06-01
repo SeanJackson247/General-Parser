@@ -80,7 +80,7 @@ Where example.java contains the Java code you want to compile. The resulting cod
 	Do statement support										DONE
 	The ':' 'operator'										DONE
 	Support for enums										DONE
-	Support control flow statements without curly braces.
+	Support control flow statements without curly braces.						DONE
 	Other array literal syntax
 	Support for the super keyword
 	Higher order logic check
