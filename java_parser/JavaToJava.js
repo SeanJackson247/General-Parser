@@ -188,9 +188,9 @@ function JavaToJava(tokens,includeTerminals=false,indent=0,includeNewLines=false
 		}
 //		if(includeTerminals && includeNewLines){code+=";\n";}
 		if(!(token.type == "operator" && token.data==":" && (token.right.type=="keyword"))){
-			if(includeTerminals && token.type!="Function" && !(token.type=="keyword" && (token.data=="switch" || token.data=="if" || token.data=="else if" || token.data=="else" || token.data=="for" || token.data=="class" || token.data=="interface"  || token.data=="enum"))){code+=";";}
+			if(includeTerminals && token.type!="Function" && !(token.type=="keyword" && (token.data=="switch" || token.data=="if" || token.data=="else if" || token.data=="else" || token.data=="for" || token.data=="class" || token.data=="interface"  || token.data=="enum"  || token.data=="return"))){code+=";";}
 		}
-		if(includeNewLines){code+="\n";}
+		if(includeNewLines && !(token.type=="keyword" && token.data=="return")){code+="\n";}
 	}
 	return code;
 }

@@ -16,6 +16,8 @@ let javaContextDependentOperatorLabellingAndMerging = require('./javaContextDepe
 
 let javaGatherByStatementsAndKeywords=require('./javaGatherByStatementsAndKeywords.js').javaGatherByStatementsAndKeywords;
 
+let HigherOrderLogicCheck = require('./HigherOrderLogicCheck.js').HigherOrderLogicCheck;
+
 function java_base_parse(fileName,requester=null){
 	let tokens = java_parse(fileName);
 	console.log("First Parse:",JSON.stringify(tokens,0,2));
@@ -47,11 +49,11 @@ function java_base_parse(fileName,requester=null){
 	tokens=javaGatherByStatementsAndKeywords(tokens);
 	console.log("Gathered By Statements And Keywords:",JSON.stringify(tokens,0,2));
 
-	//now a sanity check for syntactic limitations, like nested classes and so on...
-	//there's nothing i really care to enforce here at this time...
-
 	//final conversion to reverse polish notation and then tree, and association of types...
 	tokens=ConvertToTree(tokens);
+
+	//now a sanity check for semanticlimitations, like nested classes and so on...
+	HigherOrderLogicCheck(tokens);
 
 	console.log("Converted to Tree:",JSON.stringify(tokens,0,2));
 
