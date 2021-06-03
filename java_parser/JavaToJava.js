@@ -39,7 +39,7 @@ function JavaToJava(tokens,includeTerminals=false,indent=0,includeNewLines=false
 					code+="{}\n";
 				}
 			}
-			else if(token.data=="do" || token.data=="try" || token.data=="else"){
+			else if(token.data=="do" || token.data=="try" || token.data=="else" || token.data=="finally"){
 				code+=token.data;
 				if(token.data=="do"){
 					if(token.block){
@@ -59,7 +59,7 @@ function JavaToJava(tokens,includeTerminals=false,indent=0,includeNewLines=false
 					}
 				}
 			}
-			else if(token.data=="for" || token.data=="while" || token.data=="if" || token.data=="catch" || token.data=="switch"){
+			else if(token.data=="for" || token.data=="while" || token.data=="if" || token.data=="else if" || token.data=="catch" || token.data=="switch"){
 				code+=token.data;
 				if(token.data=="for"){
 					let sub = JavaToJava(token.condition,true,0,false);
@@ -80,6 +80,9 @@ function JavaToJava(tokens,includeTerminals=false,indent=0,includeNewLines=false
 			}
 			else if(token.data=='return'){
 				code+="return";
+			}
+			else if(token.data=='throw'){
+				code+="throw";
 			}
 			else if(token.data=="continue"){
 				code+="continue";

@@ -33,9 +33,9 @@ function HigherOrderLogicCheck(tokens,parents=[],label='none'){
 	if(parents.length>0){ parent = parents[parents.length-1]; }
 	console.log("Performing Higher Order Logic Check ",parents.length);
 	if(parents.length==0){
-		//only interfaces and classes permitted at the root
+		//only interfaces, classes and enums permitted at the root
 		for(let token of tokens){
-			if(!(token.type=='keyword' && (token.data=='class' || token.data=='interface'))){
+			if(!(token.type=='keyword' && (token.data=='class' || token.data=='interface' || token.data=='enum'))){
 				console.log("Unexpected "+token.data+" on line "+token.lineNumber+" in file "+token.fileName);
 				throw new Error();
 			}
@@ -47,25 +47,32 @@ function HigherOrderLogicCheck(tokens,parents=[],label='none'){
 		}
 	}
 	else if(parent.type=='keyword' && (parent.data=='class' || parent.data=='interface')){
-		for(let token of tokens){
-			if(token.type=='keyword'){
-				console.log("Unexpected "+token.data+" on line "+token.lineNumber+" in file "+token.fileName);
-				throw new Error();
-			}
-			else if(token.type=='Function'){
-				parents.push(token);
-				if(token.hasOwnProperty('arguments') && Array.isArray(token.arguments)){
-					HigherOrderLogicCheck(token.arguments,parents,"arguments");
+		if(Array.isArray(tokens)){
+			for(let token of tokens){
+				if(token.type=='keyword' && token.data!='class'){
+					console.log("Unexpected "+token.data+" on line "+token.lineNumber+" in file "+token.fileName);
+					throw new Error();
 				}
-				if(token.hasOwnProperty('block') && Array.isArray(token.block)){
+				else if(token.type=='keyword' && token.data=='class'){
+					parents.push(token);
 					HigherOrderLogicCheck(token.block,parents,"block");
+					parents.pop();
 				}
-				parents.pop();
-			}
-			else{
-				parents.push(token);
-				operatorCheck(token,parents);
-				parents.pop();
+				else if(token.type=='Function'){
+					parents.push(token);
+					if(token.hasOwnProperty('arguments') && Array.isArray(token.arguments)){
+						HigherOrderLogicCheck(token.arguments,parents,"arguments");
+					}
+					if(token.hasOwnProperty('block') && Array.isArray(token.block)){
+						HigherOrderLogicCheck(token.block,parents,"block");
+					}
+					parents.pop();
+				}
+				else{
+					parents.push(token);
+					operatorCheck(token,parents);
+					parents.pop();
+				}
 			}
 		}
 	}
@@ -100,60 +107,60 @@ function HigherOrderLogicCheck(tokens,parents=[],label='none'){
 	//for loops are well formed
 
 	let prevToken = null;
-	for(let token of tokens){
-		if(token.type=='keyword' && (token.data=='else if' || token.data=='else')){
-			if(prevToken==null){
-				console.log("Unexpected "+token.data);
-				throw new Error();
-			}
-			if(!(prevToken.type=='keyword' && (prevToken.data=='if' || prevToken.data=='else if'))){
-				console.log("Unexpected "+token.data + " following "+prevToken.data);
-				throw new Error();
-			}
-		}
-		prevToken = token;
-	}
-
-
-	prevToken = null;
-	for(let token of tokens){
-		if(token.type=='keyword' && (token.data=='catch' || token.data=='finally')){
-			if(prevToken==null){
-				console.log("Unexpected "+token.data);
-				throw new Error();
-			}
-			if(!(prevToken.type=='keyword' && (prevToken.data=='try' || prevToken.data=='catch'))){
-				console.log("Unexpected "+token.data + " following "+prevToken.data);
-				throw new Error();
-			}
-		}
-		prevToken = token;
-	}
- 
-	prevToken = null;
-	for(let token of tokens){
-		if(token.type=='keyword' && token.data=='for'){
-			if(!(token.condition.length == 1 || token.condition.length == 3)){
-				console.log("Malformed for loop "+token.data + " following "+prevToken.data);
-				throw new Error();				
-			}
-			else if(token.condition.length == 1){
-				if(!(token.condition[0].type=='operator' && token.condition[0].data==':')){
-					console.log("Malformed for loop "+token.data + " following "+prevToken.data);
+	if(Array.isArray(tokens)){
+		for(let token of tokens){
+			if(token.type=='keyword' && (token.data=='else if' || token.data=='else')){
+				if(prevToken==null){
+					console.log("Unexpected "+token.data);
+					throw new Error();
+				}
+				if(!(prevToken.type=='keyword' && (prevToken.data=='if' || prevToken.data=='else if'))){
+					console.log("Unexpected "+token.data + " following "+prevToken.data);
 					throw new Error();
 				}
 			}
+			prevToken = token;
 		}
-		prevToken = token;
-	}
 
-	for(let token of tokens){
-		if(token.type=='keyword' && token.data=='throws'){
-			console.log("Unexpected "+token.data+" on line "+token.lineNumber+" in file "+token.fileName);
-			throw new Error();
+		prevToken = null;
+		for(let token of tokens){
+			if(token.type=='keyword' && (token.data=='catch' || token.data=='finally')){
+				if(prevToken==null){
+					console.log("Unexpected "+token.data);
+					throw new Error();
+				}
+				if(!(prevToken.type=='keyword' && (prevToken.data=='try' || prevToken.data=='catch'))){
+					console.log("Unexpected "+token.data + " following "+prevToken.data);
+					throw new Error();
+				}
+			}
+			prevToken = token;
+		}
+	 
+		prevToken = null;
+		for(let token of tokens){
+			if(token.type=='keyword' && token.data=='for'){
+				if(!(token.condition.length == 1 || token.condition.length == 3)){
+					console.log("Malformed for loop "+token.data + " following "+prevToken.data);
+					throw new Error();				
+				}
+				else if(token.condition.length == 1){
+					if(!(token.condition[0].type=='operator' && token.condition[0].data==':')){
+						console.log("Malformed for loop "+token.data + " following "+prevToken.data);
+						throw new Error();
+					}
+				}
+			}
+			prevToken = token;
+		}
+
+		for(let token of tokens){
+			if(token.type=='keyword' && token.data=='throws'){
+				console.log("Unexpected "+token.data+" on line "+token.lineNumber+" in file "+token.fileName);
+				throw new Error();
+			}
 		}
 	}
-	
 //	parents.pop();
 }
 module.exports.HigherOrderLogicCheck = HigherOrderLogicCheck;

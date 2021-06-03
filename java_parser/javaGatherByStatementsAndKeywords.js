@@ -44,7 +44,9 @@ function javaGatherByStatementsAndKeywords(tokens,parent=null){
 				i++;
 			}
 			else if(token.data=="if" || token.data=="else if" || token.data=="while" || token.data=="for" || token.data=="catch" || token.data=="switch"){
-				if(token.data=="if" || token.data=="else if" || token.data=="while" || token.data=="for" && !(tokens[i+2].type=='delineator' && tokens[i+2].data=='{')){
+				if((token.data=="if" || token.data=="else if" || token.data=="while" || token.data=="for") && !(tokens[i+2].type=='delineator' && tokens[i+2].data=='{')){
+					console.log("condition without braces");
+					throw new Error();
 					token.condition = tokens[i+1].sub;
 					let tokenArray = [];
 					i+=2;
@@ -65,6 +67,8 @@ function javaGatherByStatementsAndKeywords(tokens,parent=null){
 					if(tokens[i+2].sub != undefined){ token.block = javaGatherByStatementsAndKeywords(tokens[i+2].sub,token); }
 					ntokens.push(token);
 					i+=2;
+				//	console.log("condition with braces",JSON.stringify(token,0,2) , "next is == ",tokens[i+1]);
+			//		throw new Error();
 				}
 			}
 			else if(token.data=="else" || token.data=="try" || token.data=="finally"){

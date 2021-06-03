@@ -43,6 +43,10 @@ function javaSanityCheck(tokens){
 			console.log("Error! This compiler supports a limited subset of Java features.\nLambdas are not supported.\nUnsupported operator \'"+token.data+"\' on line "+token.lineNumber+" in file "+token.fileName);
 			throw new Error();
 		}
+		else if(token.type=='operator' && token.data=="?"){
+			console.log("Error! This compiler supports a limited subset of Java features.\nTernary operators are not supported.\nUnsupported operator \'"+token.data+"\' on line "+token.lineNumber+" in file "+token.fileName);
+			throw new Error();
+		}
 		else if(token.type=='operator' && token.data==":"){
 //			console.log("Error! This compiler supports a limited subset of Java features.\nSpecial for loops are not supported.\nUnsupported operator \'"+token.data+"\' on line "+token.lineNumber+" in file "+token.fileName);
 	//		throw new Error();
@@ -77,6 +81,13 @@ function javaSanityCheck(tokens){
 					else if(token.data[token.data.length-1] == 'L'){
 						let substr = token.data.substring(0,token.data.length-1);
 						if(parseInt(substr)!=substr){
+							console.log('Invalid token ',token);
+							throw new Error();
+						}
+					}
+					else if(token.data[token.data.length-1] == 'd' || token.data[token.data.length-1] == 'D'){
+						let substr = token.data.substring(0,token.data.length-1);
+						if(parseFloat(substr)!=substr){
 							console.log('Invalid token ',token);
 							throw new Error();
 						}

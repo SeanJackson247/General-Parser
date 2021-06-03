@@ -8,6 +8,13 @@ let fs = require('fs');
 
 let fileName = process.argv[2];
 
+let outputFileName = process.argv[3];
+
+if(fileName == undefined || outputFileName == undefined){
+	console.log("Input file AND output file names are required.");
+	throw new Error();
+}
+
 let tokens = java_base_parse(fileName);
 
 typeCheck(tokens);
@@ -16,4 +23,4 @@ let outputString = JavaToJava(tokens);
 
 let breaker = "\n\n\n***************************************************\n\n\n";
 
-fs.writeFileSync("output.java",JSON.stringify(tokens,0,2)+breaker+outputString);
+fs.writeFileSync(outputFileName,/*JSON.stringify(tokens,0,2)+breaker+*/outputString);
