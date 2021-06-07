@@ -8,7 +8,7 @@ function insertOperators(tokens){
 			let last = tokens[i-1];
 			if(last.type=='operand' && last.data[0]!=parseInt(last.data[0])){	//is a var ref...
 				if(token.data=='('){
-					console.log("VARREF with open bracket");
+				//	console.log("VARREF with open bracket");
 					ntokens.push({ data:"CALL", type:"operator" , lineNumber:token.lineNumber , fileName:token.fileName, caretPosition:token.caretPosition });
 					isFunctionCall = true;
 				}
@@ -26,9 +26,16 @@ function insertOperators(tokens){
 		}
 		ntokens.push(token);
 		if(token.data=="(" && !isFunctionCall){
-			ntokens.push({ data:"CAST", type:"operator" , lineNumber:token.lineNumber , fileName:token.fileName, caretPosition:token.caretPosition });
+			//its a cast if reduced to a single variable
+			if(token.sub.length==1){
+				let child = token.sub[0];
+				if(child.type!='string' && parseFloat(child.data)!=child.data && parseInt(child.data)!=child.data){
+					ntokens.push({ data:"CAST", type:"operator" , lineNumber:token.lineNumber , fileName:token.fileName, caretPosition:token.caretPosition });					
+				}
+			}
 		}
 	}
+	console.log("Inserted Operators := ",JSON.stringify(ntokens,0,2));
 	return ntokens;
 }
 

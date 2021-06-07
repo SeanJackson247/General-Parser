@@ -8,6 +8,7 @@ for(let f of list){
 		exec("node java_parser.js tests/features/"+f + " tests/features/output/"+f, (error, stdout, stderr) => {
 			if (error) {
 				console.log(`error: ${error.message}`);
+				throw new Error();
 				return;
 			}
 			if (stderr) {
@@ -18,7 +19,7 @@ for(let f of list){
 		});
 	}
 }
-
+/*
 list = fs.readdirSync('tests/programs');
 
 for(let f of list){
@@ -34,4 +35,4 @@ for(let f of list){
 		}
 	//	console.log(`stdout: ${stdout}`);
 	});
-}
+}*/
