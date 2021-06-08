@@ -55,8 +55,3 @@ TO DO List:
 	Refactor the import system to work with makefiles / progressive compilation
 	Support for commas as separators in variable declarations
 	Support for lambdas
-	
-	Method inliner
-	Convert to PHP
-	Convert to JS
-	Convert to C++
