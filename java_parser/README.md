@@ -45,7 +45,7 @@ NOTES:
 
 The ':' symbol is interpreted as an operator which is sufficient for its use as a label, for label and case statement, but not for the ternary operator.
 
-TO DO List:
+	TO DO List:
 	Code for each of the features in the unsupported folder
 	Finish Type Checker
 	Warning/Error system
