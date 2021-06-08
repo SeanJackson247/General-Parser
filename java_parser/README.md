@@ -9,6 +9,8 @@ node test.js
 
 which will produce output each of the programs in the tests/features folder. The output is not yet properly validated.
 
+The test should not output anything to the console. If it does there has been an error.
+
 # How the parser works
 
 The top level overview of the parser is the following 3 steps:
