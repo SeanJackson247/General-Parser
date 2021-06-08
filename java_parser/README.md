@@ -45,8 +45,7 @@ NOTES:
 
 The ':' symbol is interpreted as an operator which is sufficient for its use as a label, for label and case statement, but not for the ternary operator.
 
-Each of the features in the unsupported folder should be supported by the parser without the type checker, it is the type checker that needs finishing.
-
+TO DO List:
 	Code for each of the features in the unsupported folder
 	Finish Type Checker
 	Warning/Error system
